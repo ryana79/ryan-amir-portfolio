@@ -3,11 +3,13 @@ const sidemenu = document.querySelector("nav ul");
 const menuIcon = document.querySelector(".menu-icon");
 
 function toggleMenu() {
-  sidemenu.classList.toggle("show");
+  const isOpen = sidemenu.classList.toggle("show");
   menuIcon.classList.toggle("active");
   document.body.classList.toggle("menu-open");
+  menuIcon.setAttribute("aria-expanded", isOpen ? "true" : "false");
 }
 
+menuIcon.setAttribute("aria-expanded", "false");
 menuIcon.addEventListener("click", toggleMenu);
 
 // Close menu when clicking outside
