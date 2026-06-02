@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Ryan Amir — Cloud Engineer with 3+ years experience in Azure, Terraform, and DevOps. Building scalable cloud infrastructure and modern web applications from Matawan, NJ." />
+  <meta property="og:title" content="Ryan Amir — Folio №07 / Edition 2026" />
+  <meta property="og:description" content="Cloud Engineer with 3+ years experience in Azure, Terraform, and DevOps. Specializing in IaC, CI/CD pipelines, and serverless architectures." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ryanamir.online/" />
+  <meta property="og:image" content="https://ryanamir.online/images/og-share.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Ryan Amir — Cloud Engineer · Portfolio 2026" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ryan Amir — Folio №07 / Edition 2026" />
+  <meta name="twitter:description" content="Cloud Engineer with 3+ years experience in Azure, Terraform, and DevOps." />
+  <meta name="twitter:image" content="https://ryanamir.online/images/og-share.png" />
+  <meta name="theme-color" content="#efe7d6" />
+  <title>Ryan Amir — Folio №07 / Edition 2026</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300..700;1,300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="portfolio.css" />
+  <link rel="icon" href="images/Untitled_design-removebg.png" type="image/png" />
+
+  <!-- React + Babel only for the Tweaks panel -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- ============================================
+     BOOT OVERLAY
+     ============================================ -->
+<div id="boot" class="boot" aria-hidden="true">
+  <div class="boot-inner">
+    <div class="boot-brand"><span class="brand-glyph">◢◤</span><span>RYAN_AMIR</span><span class="boot-meta">/ folio.v26</span></div>
+    <div class="boot-lines" id="boot-lines"></div>
+    <div class="boot-bar"><div class="boot-bar-fill" id="boot-fill"></div></div>
+    <div class="boot-pct" id="boot-pct">0%</div>
+  </div>
+</div>
+
+<!-- Mouse spotlight -->
+<div class="spotlight" aria-hidden="true"></div>
+
+<!-- ============================================
+     ANIMATED BACKGROUND
+     ============================================ -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-vignette" aria-hidden="true"></div>
+<div class="bg-noise" aria-hidden="true"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+<!-- ============================================
+     TOP STATUS BAR
+     ============================================ -->
+<div class="topbar" role="banner">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-glyph">◢◤</span>
+      <span class="brand-name">RYAN_AMIR</span>
+      <span class="brand-sep">/</span>
+      <span class="brand-role">cloud-engineer.v26</span>
+    </div>
+
+    <div class="status-cluster" aria-label="Live status">
+      <span class="stat">
+        <i class="stat-dot ok"></i>
+        <span class="stat-key">SYS</span>
+        <span class="stat-val" data-stat="sys">OPERATIONAL</span>
+      </span>
+      <span class="stat">
+        <span class="stat-key">UPTIME</span>
+        <span class="stat-val" data-stat="uptime">99.99%</span>
+      </span>
+      <span class="stat">
+        <span class="stat-key">REGION</span>
+        <span class="stat-val">EAST-US · NJ</span>
+      </span>
+      <span class="stat">
+        <span class="stat-key">LAT</span>
+        <span class="stat-val" data-stat="lat">14ms</span>
+      </span>
+      <span class="stat clock">
+        <span class="stat-key">UTC</span>
+        <span class="stat-val" data-stat="clock">--:--:--</span>
+      </span>
+    </div>
+
+    <div class="viewing-now" aria-label="Live presence">
+      <span class="vn-key">VIEWING</span>
+      <span class="vn-val" id="viewing-count">1</span>
+      <span class="vn-dot"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     LEFT RAIL NAV
+     ============================================ -->
+<nav class="rail-nav" aria-label="Primary">
+  <ol>
+    <li><a href="#home" class="active" data-num="00"><span class="rail-line"></span><span class="rail-label">INDEX</span></a></li>
+    <li><a href="#about" data-num="01"><span class="rail-line"></span><span class="rail-label">PROFILE</span></a></li>
+    <li><a href="#practice" data-num="02"><span class="rail-line"></span><span class="rail-label">PRACTICE</span></a></li>
+    <li><a href="#folio" data-num="03"><span class="rail-line"></span><span class="rail-label">FOLIO</span></a></li>
+    <li><a href="#contact" data-num="04"><span class="rail-line"></span><span class="rail-label">CONTACT</span></a></li>
+  </ol>
+</nav>
+
+<!-- ============================================
+     HERO / INDEX
+     ============================================ -->
+<header id="home" class="hero">
+  <div class="container hero-inner">
+    <div class="hero-meta">
+      <span class="meta-line"><span class="meta-key">// edition</span> <span class="meta-val">07 · MMXXVI</span></span>
+      <span class="meta-line"><span class="meta-key">// build</span> <span class="meta-val" id="build-hash">a7f3e2c</span></span>
+      <span class="meta-line"><span class="meta-key">// dispatch</span> <span class="meta-val">40.4°N 74.2°W</span></span>
+    </div>
+
+    <h1 class="hero-title" data-scramble>
+      <span class="line line-1"><span class="hero-word">CLOUD</span><span class="hero-word italic">infrastructure,</span></span>
+      <span class="line line-2"><span class="hero-word">QUIETLY</span></span>
+      <span class="line line-3"><span class="hero-word italic">engineered.</span></span>
+    </h1>
+
+    <p class="hero-lede">
+      I'm <strong>Ryan Amir</strong>. I design Azure platforms, Terraform modules and
+      the kind of monitoring that warns you before the customer does. Three years in,
+      <em>still learning the quiet craft</em> of systems that don't fall over.
+    </p>
+
+    <!-- TERMINAL -->
+    <div class="terminal" role="region" aria-label="Live agent log">
+      <div class="term-chrome">
+        <span class="term-dot r"></span>
+        <span class="term-dot y"></span>
+        <span class="term-dot g"></span>
+        <span class="term-path">~/ryan-amir/agent.log</span>
+        <span class="term-status"><i class="stat-dot ok"></i> STREAMING</span>
+      </div>
+      <div class="term-body" id="term-body" aria-live="polite"></div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#folio" class="btn btn-primary">
+        <span class="btn-glyph">▶</span>
+        <span>See the work</span>
+      </a>
+      <a href="#contact" class="btn btn-ghost">
+        <span>Start a thread</span>
+        <span class="btn-glyph">↗</span>
+      </a>
+      <a href="images/Ryan_Amir_Resume.pdf?v=2026-05-28" target="_blank" rel="noopener" class="btn btn-ghost btn-mini" download="Ryan_Amir_Resume.pdf">
+        <span>résumé.pdf</span>
+        <span class="btn-glyph">↓</span>
+      </a>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="stats-strip">
+      <div class="stat-card">
+        <span class="stat-card-num" data-count="3">3</span>
+        <span class="stat-card-unit">yrs</span>
+        <span class="stat-card-label">cloud engineering · azure first</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card-num" data-count="25">25</span>
+        <span class="stat-card-unit">%</span>
+        <span class="stat-card-label">avg. infra cost reduction shipped</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card-num" data-count="100">100</span>
+        <span class="stat-card-unit">+</span>
+        <span class="stat-card-label">virtual desktops administered</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card-num" data-count="200">200</span>
+        <span class="stat-card-unit">ms</span>
+        <span class="stat-card-label">api p95 — sub-target</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marquee underneath -->
+  <div class="hero-marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>AZURE</span><i>◆</i><span>TERRAFORM</span><i>◆</i><span>BICEP</span><i>◆</i><span>GITHUB ACTIONS</span><i>◆</i><span>PYTHON</span><i>◆</i><span>POWERSHELL</span><i>◆</i><span>COSMOS DB</span><i>◆</i><span>SERVICE BUS</span><i>◆</i><span>NERDIO</span><i>◆</i><span>OBSERVABILITY</span><i>◆</i>
+      <span>AZURE</span><i>◆</i><span>TERRAFORM</span><i>◆</i><span>BICEP</span><i>◆</i><span>GITHUB ACTIONS</span><i>◆</i><span>PYTHON</span><i>◆</i><span>POWERSHELL</span><i>◆</i><span>COSMOS DB</span><i>◆</i><span>SERVICE BUS</span><i>◆</i><span>NERDIO</span><i>◆</i><span>OBSERVABILITY</span><i>◆</i>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================
+     §01 PROFILE
+     ============================================ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">$ profile --read</span>
+      <h2 class="section-title" data-scramble>Profile<span class="section-rule"></span><em class="section-mark">01</em></h2>
+    </div>
+
+    <div class="profile-grid">
+      <!-- LEFT: portrait card -->
+      <aside class="portrait-card">
+        <div class="portrait-frame">
+          <img src="images/IMG_1158.JPG" alt="Ryan Amir" loading="lazy" />
+          <div class="portrait-scan"></div>
+          <div class="portrait-meta">
+            <span>RA · 2005</span>
+            <span class="portrait-id">ID/RA-007</span>
+          </div>
+        </div>
+
+        <dl class="spec-list">
+          <div><dt>BORN</dt><dd>Pakistan · 2005</dd></div>
+          <div><dt>BASED</dt><dd>Matawan, NJ</dd></div>
+          <div><dt>STUDIES</dt><dd>Rutgers · CS '27</dd></div>
+          <div><dt>READS</dt><dd>Documentation, mostly</dd></div>
+          <div><dt>DRINKS</dt><dd>Coffee, no sugar</dd></div>
+          <div><dt>STACK</dt><dd>Azure · TF · Py · GHA</dd></div>
+        </dl>
+      </aside>
+
+      <!-- RIGHT: bio + tabs -->
+      <div class="profile-body">
+        <p class="bio-lead">
+          A 21-year-old computer-science student at Rutgers, born in Pakistan and
+          now based on the Jersey shore. Three years quietly translating fragile
+          spreadsheets and brittle servers into <em>repeatable, observable</em>
+          Azure infrastructure — the kind that lets a team sleep through the night.
+        </p>
+        <p class="bio-body">
+          Work sits at the seam between platform engineering and the web:
+          Terraform modules, GitHub Actions, Bicep templates, and a stubborn
+          insistence that the front-end of a system should be as considered
+          as its plumbing.
+        </p>
+
+        <!-- TAB SWITCHER -->
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="experience">EXPERIENCE</button>
+          <button class="tab" data-tab="skills">SKILLS</button>
+          <button class="tab" data-tab="certs">CERTS</button>
+          <button class="tab" data-tab="education">EDUCATION</button>
+        </div>
+
+        <!-- EXPERIENCE -->
+        <div class="tab-panel active" id="tab-experience">
+          <ol class="timeline">
+            <li class="tl-item current">
+              <div class="tl-bar">
+                <span class="tl-node"></span>
+                <span class="tl-line"></span>
+              </div>
+              <div class="tl-content">
+                <div class="tl-head">
+                  <h3>Cloud Engineer <span class="tl-at">@ Astro Intelligence INC</span></h3>
+                  <span class="tl-date">JUL '23 — NOW</span>
+                </div>
+                <ul class="tl-list">
+                  <li>Designed Azure infrastructure (VMs, VNets, Storage, Key Vault) with secure networking across multiple environments.</li>
+                  <li>Reduced idle compute costs <strong>25%</strong> via Automation runbooks and VM right-sizing.</li>
+                  <li>Administered Azure Virtual Desktop for <strong>100+ users</strong> through Nerdio Manager.</li>
+                  <li>Built reusable Terraform modules + GitHub Actions CI/CD for repeatable deployments.</li>
+                  <li>Event-driven workflows on Logic Apps, Service Bus, Event Grid.</li>
+                </ul>
+              </div>
+            </li>
+            <li class="tl-item">
+              <div class="tl-bar">
+                <span class="tl-node"></span>
+                <span class="tl-line"></span>
+              </div>
+              <div class="tl-content">
+                <div class="tl-head">
+                  <h3>Cloud Solutions Engineer <span class="tl-at">@ Chief Technology Group</span></h3>
+                  <span class="tl-date">JUN '21 — JUN '23</span>
+                </div>
+                <ul class="tl-list">
+                  <li>Provisioned and maintained Citrix VMs using MCS; golden image updates &amp; patching cycles.</li>
+                  <li>Configured Azure environments (VNets, NSGs, LBs); supported IAM/RBAC audits across 2 tenants.</li>
+                  <li>Automated VM domain join with PowerShell DSC — setup time down <strong>60%</strong>.</li>
+                  <li>Monitored 20+ Citrix servers; resolved <strong>85%</strong> of tickets on first contact.</li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <!-- SKILLS - oscilloscope gauges -->
+        <div class="tab-panel" id="tab-skills">
+          <div class="gauges">
+            <div class="gauge" data-level="95">
+              <div class="gauge-head">
+                <span class="gauge-name">Azure / Cloud Infra</span>
+                <span class="gauge-val">0.95</span>
+              </div>
+              <div class="gauge-track">
+                <div class="gauge-fill"></div>
+                <div class="gauge-ticks"></div>
+              </div>
+              <span class="gauge-tag">primary discipline</span>
+            </div>
+            <div class="gauge" data-level="90">
+              <div class="gauge-head">
+                <span class="gauge-name">Terraform · Bicep · IaC</span>
+                <span class="gauge-val">0.90</span>
+              </div>
+              <div class="gauge-track">
+                <div class="gauge-fill"></div>
+                <div class="gauge-ticks"></div>
+              </div>
+              <span class="gauge-tag">declarative everything</span>
+            </div>
+            <div class="gauge" data-level="85">
+              <div class="gauge-head">
+                <span class="gauge-name">CI/CD · GitHub Actions</span>
+                <span class="gauge-val">0.85</span>
+              </div>
+              <div class="gauge-track">
+                <div class="gauge-fill"></div>
+                <div class="gauge-ticks"></div>
+              </div>
+              <span class="gauge-tag">deploy on a yawn</span>
+            </div>
+            <div class="gauge" data-level="85">
+              <div class="gauge-head">
+                <span class="gauge-name">Python · PowerShell · Bash</span>
+                <span class="gauge-val">0.85</span>
+              </div>
+              <div class="gauge-track">
+                <div class="gauge-fill"></div>
+                <div class="gauge-ticks"></div>
+              </div>
+              <span class="gauge-tag">scripting · runbooks</span>
+            </div>
+            <div class="gauge" data-level="80">
+              <div class="gauge-head">
+                <span class="gauge-name">Observability · Telemetry</span>
+                <span class="gauge-val">0.80</span>
+              </div>
+              <div class="gauge-track">
+                <div class="gauge-fill"></div>
+                <div class="gauge-ticks"></div>
+              </div>
+              <span class="gauge-tag">log analytics · alerts</span>
+            </div>
+            <div class="gauge" data-level="75">
+              <div class="gauge-head">
+                <span class="gauge-name">React · Front-end</span>
+                <span class="gauge-val">0.75</span>
+              </div>
+              <div class="gauge-track">
+                <div class="gauge-fill"></div>
+                <div class="gauge-ticks"></div>
+              </div>
+              <span class="gauge-tag">stubborn habit</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CERTS -->
+        <div class="tab-panel" id="tab-certs">
+          <ul class="cert-list">
+            <li>
+              <span class="cert-tag">CERT/01</span>
+              <span class="cert-name">Microsoft Certified · Azure Administrator Associate</span>
+              <span class="cert-date">JAN 2026</span>
+              <span class="cert-light"></span>
+            </li>
+            <li>
+              <span class="cert-tag">CERT/02</span>
+              <span class="cert-name">Microsoft Certified · Azure Fundamentals</span>
+              <span class="cert-date">—</span>
+              <span class="cert-light"></span>
+            </li>
+            <li>
+              <span class="cert-tag">CERT/03</span>
+              <span class="cert-name">AWS Certified · Cloud Practitioner</span>
+              <span class="cert-date">—</span>
+              <span class="cert-light"></span>
+            </li>
+            <li>
+              <span class="cert-tag">CERT/04</span>
+              <span class="cert-name">AT&amp;T · Technology Academy</span>
+              <span class="cert-date">—</span>
+              <span class="cert-light"></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="tab-panel" id="tab-education">
+          <div class="edu-card">
+            <div class="edu-head">
+              <h3>Rutgers University</h3>
+              <span class="edu-date">2023 — 2027</span>
+            </div>
+            <p>Bachelor of Science · Computer Science. Currently a junior.</p>
+            <div class="edu-tags">
+              <span>algorithms</span><span>distributed-systems</span><span>os</span><span>networks</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     §02 PRACTICE
+     ============================================ -->
+<section id="practice" class="section section-alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">$ practice --list</span>
+      <h2 class="section-title" data-scramble>Practice<span class="section-rule"></span><em class="section-mark">02</em></h2>
+    </div>
+
+    <div class="practice-grid">
+      <article class="module">
+        <div class="module-head">
+          <span class="module-num">MOD_01</span>
+          <span class="module-light"></span>
+        </div>
+        <h3 class="module-title">Cloud<br/><em>Engineering</em></h3>
+        <p>
+          Scalable, secure, cost-conscious cloud platforms on Azure and AWS.
+          Reusable Terraform modules, GitHub Actions pipelines, and the kind
+          of monitoring that warns you before the customer does.
+        </p>
+        <ul class="module-tags">
+          <li>Azure</li><li>Terraform</li><li>Bicep</li><li>CI/CD</li><li>Observability</li>
+        </ul>
+        <div class="module-foot">
+          <span>availability</span>
+          <div class="mini-bar"><div style="width:96%"></div></div>
+          <span>96%</span>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-head">
+          <span class="module-num">MOD_02</span>
+          <span class="module-light"></span>
+        </div>
+        <h3 class="module-title">Web<br/><em>Development</em></h3>
+        <p>
+          Modern, accessible interfaces with an editorial sensibility — from
+          quiet landing pages to production web apps. Care for typography,
+          performance, and the people on the other side.
+        </p>
+        <ul class="module-tags">
+          <li>React</li><li>TypeScript</li><li>HTML/CSS</li><li>Flask</li><li>Design</li>
+        </ul>
+        <div class="module-foot">
+          <span>availability</span>
+          <div class="mini-bar"><div style="width:88%"></div></div>
+          <span>88%</span>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-head">
+          <span class="module-num">MOD_03</span>
+          <span class="module-light"></span>
+        </div>
+        <h3 class="module-title">Automation<br/><em>&amp; DevOps</em></h3>
+        <p>
+          Untangling toil. Idempotent scripts, declarative infrastructure,
+          and pipelines that make deploying boring — in the best way.
+        </p>
+        <ul class="module-tags">
+          <li>Python</li><li>PowerShell</li><li>Bash</li><li>Runbooks</li><li>GHA</li>
+        </ul>
+        <div class="module-foot">
+          <span>availability</span>
+          <div class="mini-bar"><div style="width:92%"></div></div>
+          <span>92%</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     §03 FOLIO
+     ============================================ -->
+<section id="folio" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">$ folio --since 2023</span>
+      <h2 class="section-title" data-scramble>Folio<span class="section-rule"></span><em class="section-mark">03</em></h2>
+    </div>
+
+    <div class="filter-bar" role="toolbar" aria-label="Filter projects">
+      <span class="filter-key">FILTER:</span>
+      <button class="filter-btn active" data-filter="all">all</button>
+      <button class="filter-btn" data-filter="cloud">cloud-engineering</button>
+      <button class="filter-btn" data-filter="web">web-development</button>
+      <span class="filter-count" id="filter-count">05 / 05</span>
+    </div>
+
+    <!-- Featured project -->
+    <article class="feature-project portfolio-item" data-category="cloud">
+      <div class="feat-grid">
+        <div class="feat-media">
+          <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="feat-media-link">
+            <img src="images/cloudpulse.png" alt="CloudPulse AI platform dashboard" loading="lazy" />
+            <div class="feat-overlay">
+              <span class="feat-overlay-chip">live · production</span>
+              <span class="feat-overlay-link">open ↗</span>
+            </div>
+          </a>
+        </div>
+        <div class="feat-body">
+          <span class="feat-tag"><i class="stat-dot ok"></i> FEATURED · 2026</span>
+          <h3 class="feat-title">CloudPulse — <em>listening to a fleet of servers.</em></h3>
+          <p class="feat-desc">
+            An AI-driven cloud observability platform with intelligent insights,
+            streamlined reporting and operational automation for modern
+            infrastructure teams.
+          </p>
+
+          <div class="feat-mini-dash">
+            <div class="mini-stat">
+              <span class="mini-key">stack</span>
+              <span class="mini-val">React · Azure Functions · OpenAI</span>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-key">role</span>
+              <span class="mini-val">engineering + design</span>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-key">status</span>
+              <span class="mini-val"><i class="stat-dot ok"></i> live</span>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-key">year</span>
+              <span class="mini-val">2026</span>
+            </div>
+          </div>
+
+          <!-- Fake live spark + telemetry -->
+          <div class="feat-telemetry">
+            <div class="tele-row">
+              <span class="tele-label">REQ/S</span>
+              <canvas class="spark" data-spark="rps" width="280" height="32"></canvas>
+              <span class="tele-num" data-tele="rps">428</span>
+            </div>
+            <div class="tele-row">
+              <span class="tele-label">CPU%</span>
+              <canvas class="spark" data-spark="cpu" width="280" height="32"></canvas>
+              <span class="tele-num" data-tele="cpu">23</span>
+            </div>
+            <div class="tele-row">
+              <span class="tele-label">P95ms</span>
+              <canvas class="spark" data-spark="p95" width="280" height="32"></canvas>
+              <span class="tele-num" data-tele="p95">187</span>
+            </div>
+          </div>
+
+          <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <span class="btn-glyph">▶</span>
+            <span>Read the case</span>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project grid -->
+    <div class="folio-grid">
+      <article class="folio-card portfolio-item" data-category="cloud">
+        <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">
+          <div class="folio-media">
+            <img src="images/platform.png" alt="Platform Control Room internal developer platform dashboard" loading="lazy" />
+          </div>
+          <div class="folio-meta">
+            <div class="folio-row">
+              <span class="folio-num">PROJ/02</span>
+              <span class="folio-year">2026</span>
+              <span class="folio-light"></span>
+            </div>
+            <h3>Platform Control Room</h3>
+            <p>Azure-ready internal developer platform for workload onboarding, policy checks, GitOps delivery, drift detection, and cost governance.</p>
+            <div class="folio-tags">
+              <span>azure</span><span>gitops</span><span>kubernetes</span><span>policy</span>
+            </div>
+            <span class="folio-arrow">↗ open</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="folio-card portfolio-item" data-category="cloud">
+        <a href="https://www.postmortemincidentmanager.space/" target="_blank" rel="noopener noreferrer">
+          <div class="folio-media">
+            <img src="images/postmortem_manager.png" alt="Incident Postmortem Manager" loading="lazy" />
+          </div>
+          <div class="folio-meta">
+            <div class="folio-row">
+              <span class="folio-num">PROJ/03</span>
+              <span class="folio-year">2026</span>
+              <span class="folio-light"></span>
+            </div>
+            <h3>Incident Postmortem Manager</h3>
+            <p>Production-ready incident platform on Azure with React, Functions, Cosmos DB, and AI-assisted root-cause analysis.</p>
+            <div class="folio-tags">
+              <span>azure</span><span>react</span><span>cosmosdb</span><span>ai</span>
+            </div>
+            <span class="folio-arrow">↗ open</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="folio-card portfolio-item" data-category="cloud">
+        <a href="https://azureusermanager.com" target="_blank" rel="noopener noreferrer">
+          <div class="folio-media">
+            <img src="images/azure_user_manager_img.png" alt="Azure Serverless User Manager" loading="lazy" />
+          </div>
+          <div class="folio-meta">
+            <div class="folio-row">
+              <span class="folio-num">PROJ/04</span>
+              <span class="folio-year">2025</span>
+              <span class="folio-light"></span>
+            </div>
+            <h3>Azure Serverless User Manager</h3>
+            <p>Serverless REST API · Python Functions · Cosmos DB · sub-200ms p95 · full IaC via Bicep.</p>
+            <div class="folio-tags">
+              <span>azure</span><span>functions</span><span>bicep</span><span>python</span>
+            </div>
+            <span class="folio-arrow">↗ open</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="folio-card portfolio-item" data-category="web">
+        <a href="https://barbershop-appointments.onrender.com/" target="_blank" rel="noopener noreferrer">
+          <div class="folio-media">
+            <img src="images/barbershopimage.png" alt="Glight Cutz Booking System" loading="lazy" />
+          </div>
+          <div class="folio-meta">
+            <div class="folio-row">
+              <span class="folio-num">PROJ/05</span>
+              <span class="folio-year">2024</span>
+              <span class="folio-light"></span>
+            </div>
+            <h3>Glight Cutz · Booking System</h3>
+            <p>Full-stack appointment system in Python &amp; Flask · 500+ clients · 30% retention lift.</p>
+            <div class="folio-tags">
+              <span>python</span><span>flask</span><span>postgres</span>
+            </div>
+            <span class="folio-arrow">↗ open</span>
+          </div>
+        </a>
+      </article>
+    </div>
+
+    <div class="folio-foot">
+      <span class="folio-foot-meta">more on github · 12+ public repos</span>
+      <a href="https://github.com/ryana79" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+        <span>github.com/ryana79</span>
+        <span class="btn-glyph">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     §04 CONTACT
+     ============================================ -->
+<section id="contact" class="section section-alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">$ contact --open</span>
+      <h2 class="section-title" data-scramble>Contact<span class="section-rule"></span><em class="section-mark">04</em></h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="contact-lead">
+          Working on something interesting? Hiring? Want to argue about Terraform
+          module design? <em>Write in.</em> I read every note.
+        </p>
+
+        <ul class="contact-list">
+          <li>
+            <span class="ck">EMAIL</span>
+            <a href="mailto:ryanmohammadamir@gmail.com">ryanmohammadamir@gmail.com</a>
+          </li>
+          <li>
+            <span class="ck">PHONE</span>
+            <a href="tel:+17323975773">+1 (732) 397-5773</a>
+          </li>
+          <li>
+            <span class="ck">PLACE</span>
+            <span>Matawan, New Jersey · UTC−5</span>
+          </li>
+          <li>
+            <span class="ck">GITHUB</span>
+            <a href="https://github.com/ryana79" target="_blank" rel="noopener noreferrer">github.com/ryana79</a>
+          </li>
+          <li>
+            <span class="ck">LINKEDIN</span>
+            <a href="https://www.linkedin.com/in/ryan-amir-335143299/" target="_blank" rel="noopener noreferrer">/in/ryan-amir</a>
+          </li>
+        </ul>
+
+        <div class="response-card">
+          <div class="response-head">
+            <span class="response-key">RESPONSE</span>
+            <span class="response-light"></span>
+          </div>
+          <p>Typically replies within <strong>24h</strong> on weekdays.</p>
+        </div>
+      </div>
+
+      <form id="contact-form" class="contact-form" action="https://formspree.io/f/mkgjjkwj" method="POST">
+        <div class="form-chrome">
+          <span class="term-dot r"></span>
+          <span class="term-dot y"></span>
+          <span class="term-dot g"></span>
+          <span class="term-path">~/compose --to ryan</span>
+        </div>
+        <div class="form-body">
+          <label>
+            <span class="form-key">// name</span>
+            <input type="text" name="name" placeholder="your name" required autocomplete="name" />
+          </label>
+          <label>
+            <span class="form-key">// email</span>
+            <input type="email" name="email" placeholder="you@domain.com" required autocomplete="email" />
+          </label>
+          <label>
+            <span class="form-key">// subject</span>
+            <input type="text" name="subject" placeholder="what is this regarding?" required />
+          </label>
+          <label>
+            <span class="form-key">// message</span>
+            <textarea name="message" placeholder="say hello." required rows="5"></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary btn-full">
+            <span class="btn-glyph">▶</span>
+            <span>send_message()</span>
+          </button>
+          <p id="msg" class="form-message" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     COLOPHON
+     ============================================ -->
+<footer class="colophon">
+  <div class="container">
+    <div class="colo-grid">
+      <div class="colo-block colo-now">
+        <div class="colo-brand">
+          <span class="brand-glyph">◢◤</span>
+          <span class="brand-name">RYAN_AMIR</span>
+          <span class="now-light"></span>
+        </div>
+        <span class="colo-key">// now</span>
+        <ul class="now-feed" id="now-feed">
+          <li><span class="now-time">21:04</span><span class="now-tag ok">shipping</span><span>terraform module: hub-spoke v2</span></li>
+          <li><span class="now-time">20:12</span><span class="now-tag info">reading</span><span>azure well-architected · cost pillar</span></li>
+          <li><span class="now-time">19:38</span><span class="now-tag ok">deployed</span><span>cloudpulse · build #428 · green</span></li>
+          <li><span class="now-time">17:22</span><span class="now-tag info">writing</span><span>field note: incident review playbook</span></li>
+        </ul>
+      </div>
+      <div class="colo-block">
+        <span class="colo-key">// index</span>
+        <ul>
+          <li><a href="#home">00 · home</a></li>
+          <li><a href="#about">01 · profile</a></li>
+          <li><a href="#practice">02 · practice</a></li>
+          <li><a href="#folio">03 · folio</a></li>
+          <li><a href="#contact">04 · contact</a></li>
+        </ul>
+      </div>
+      <div class="colo-block">
+        <span class="colo-key">// elsewhere</span>
+        <ul>
+          <li><a href="https://github.com/ryana79" target="_blank" rel="noopener noreferrer">github ↗</a></li>
+          <li><a href="https://www.linkedin.com/in/ryan-amir-335143299/" target="_blank" rel="noopener noreferrer">linkedin ↗</a></li>
+          <li><a href="mailto:ryanmohammadamir@gmail.com">email ↗</a></li>
+        </ul>
+      </div>
+      <div class="colo-block">
+        <span class="colo-key">// system</span>
+        <ul class="sys-list">
+          <li><span>build</span><span id="footer-hash">a7f3e2c</span></li>
+          <li><span>uptime</span><span>99.99%</span></li>
+          <li><span>region</span><span>east-us</span></li>
+          <li><span>edition</span><span>№07</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="colo-foot">
+      <span>© 2026 Ryan Amir · all rights reserved.</span>
+      <span>edition №07 · MMXXVI · printed on the open web</span>
+      <a href="#home" class="to-top">↑ back to top</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================
+     AGENT CHAT (Claude)
+     ============================================ -->
+<div id="agent-launcher" class="agent-launcher" role="button" tabindex="0" aria-label="Ask Ryan's agent (press /)">
+  <span class="agent-ring"></span>
+  <span class="agent-pulse"></span>
+  <span class="agent-glyph">◇</span>
+  <span class="agent-text">ASK · AGENT</span>
+  <kbd class="agent-kbd">/</kbd>
+</div>
+
+<div id="agent-panel" class="agent-panel" hidden aria-label="Agent chat">
+  <div class="agent-head">
+    <div class="agent-brand">
+      <span class="agent-glyph small">◇</span>
+      <span class="agent-name">ryan_agent</span>
+      <span class="agent-meta">— ask anything about Ryan</span>
+    </div>
+    <button type="button" class="agent-close" aria-label="Close chat">×</button>
+  </div>
+  <div class="agent-body" id="agent-body">
+    <div class="agent-msg agent-msg-bot">
+      <span class="agent-msg-role">agent</span>
+      <span class="agent-msg-text">Hi — I'm Ryan's agent. Ask me anything about his work, stack, projects, or experience. I'll keep it honest and short.</span>
+    </div>
+  </div>
+  <div class="agent-suggest">
+    <button class="agent-chip">What's his strongest stack?</button>
+    <button class="agent-chip">Tell me about CloudPulse</button>
+    <button class="agent-chip">Is he open to work?</button>
+  </div>
+  <form class="agent-input" id="agent-form">
+    <input type="text" id="agent-input" placeholder="ask the agent…" autocomplete="off" />
+    <button type="submit" aria-label="Send">▶</button>
+  </form>
+</div>
+
+<!-- Tweaks panel mount -->
+<div id="tweaks-root"></div>
+
+<script src="portfolio.js"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks.jsx"></script>
+
+</body>
+</html>
