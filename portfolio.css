@@ -1223,6 +1223,7 @@ img { max-width: 100%; display: block; }
 
 .feat-media { position: relative; overflow: hidden; background: var(--bg-2); border-right: 1px solid var(--border); }
 .feat-media-link { display: block; position: relative; }
+.feat-media picture { display: block; width: 100%; height: 100%; }
 .feat-media img {
   width: 100%;
   height: 100%;
@@ -1326,27 +1327,137 @@ img { max-width: 100%; display: block; }
   gap: 6px;
 }
 
-/* Telemetry rows with spark */
-.feat-telemetry {
+/* Telemetry rows replaced by outcome list + case notes */
+.feat-outcomes {
+  list-style: none;
   border: 1px solid var(--border);
   border-radius: 4px;
-  padding: 4px 12px;
+  padding: 4px 0;
   background: oklch(0.07 0.01 250 / 0.6);
+  margin: 0;
 }
-.tele-row {
+.feat-outcomes li {
   display: grid;
-  grid-template-columns: 60px 1fr 50px;
+  grid-template-columns: 72px 1fr;
   gap: 12px;
-  align-items: center;
-  padding: 6px 0;
+  padding: 8px 14px;
   border-bottom: 1px solid var(--border);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 11.5px;
+  line-height: 1.45;
 }
-.tele-row:last-child { border-bottom: none; }
-.tele-label { color: var(--text-dim); letter-spacing: 0.1em; }
-.tele-num { color: var(--accent); text-align: right; font-weight: 500; }
-.spark { width: 100%; height: 32px; }
+.feat-outcomes li:last-child { border-bottom: none; }
+.fo-key {
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+  padding-top: 2px;
+}
+.fo-val { color: var(--text-2); }
+
+.case-block {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.case-block summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  list-style: none;
+}
+.case-block summary::-webkit-details-marker { display: none; }
+.case-block summary::before {
+  content: '▸ ';
+  color: var(--text-dim);
+}
+.case-block[open] summary::before { content: '▾ '; }
+.case-body {
+  padding: 0 14px 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.case-body ul {
+  margin: 0;
+  padding-left: 1.1em;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.case-body a { color: var(--accent); }
+
+.case-strip {
+  margin: 28px 0 36px;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+}
+.case-strip-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 0;
+}
+@media (max-width: 900px) {
+  .case-strip-grid { grid-template-columns: 1fr; }
+}
+.case-strip-media {
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+  min-height: 240px;
+  background: var(--bg);
+}
+@media (max-width: 900px) {
+  .case-strip-media { border-right: none; border-bottom: 1px solid var(--border); }
+}
+.case-strip-media img,
+.case-strip-media picture,
+.case-strip-media picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.05) saturate(0.9) brightness(0.95);
+}
+.case-strip-body {
+  padding: clamp(20px, 3vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.case-strip-body h3 {
+  font-family: var(--display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 400;
+  margin: 0;
+}
+
+.hero-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+.profile-stats {
+  margin: 22px 0 8px;
+}
+
+@media (max-width: 720px) {
+  .terminal { display: none; }
+}
 
 /* Folio grid */
 .folio-grid {
@@ -1374,10 +1485,15 @@ img { max-width: 100%; display: block; }
   border-bottom: 1px solid var(--border);
   position: relative;
 }
-.folio-media img {
+.folio-media img,
+.folio-media picture,
+.folio-media picture img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+.folio-media img {
   filter: contrast(1.05) saturate(0.9) brightness(0.95);
   transition: transform 0.7s var(--ease), filter 0.4s var(--ease);
 }
@@ -2106,7 +2222,7 @@ html.agent-open .agent-launcher {
 }
 .now-feed li {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: baseline;
   font-family: var(--mono);

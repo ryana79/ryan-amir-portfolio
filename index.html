@@ -18,7 +18,33 @@
   <meta name="twitter:description" content="Cloud Engineer with 3+ years experience in Azure, Terraform, and DevOps." />
   <meta name="twitter:image" content="https://ryanamir.online/images/og-share.png" />
   <meta name="theme-color" content="#efe7d6" />
+  <link rel="canonical" href="https://ryanamir.online/" />
   <title>Ryan Amir — Folio №07 / Edition 2026</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ryan Amir",
+    "url": "https://ryanamir.online/",
+    "jobTitle": "Cloud Engineer",
+    "email": "mailto:ryanmohammadamir@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Matawan",
+      "addressRegion": "NJ",
+      "addressCountry": "US"
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Rutgers University"
+    },
+    "sameAs": [
+      "https://github.com/ryana79",
+      "https://www.linkedin.com/in/ryan-amir-335143299/"
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,10 +53,35 @@
   <link rel="stylesheet" href="portfolio.css" />
   <link rel="icon" href="images/Untitled_design-removebg.png" type="image/png" />
 
-  <!-- React + Babel only for the Tweaks panel -->
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <!-- React + Babel only for the Tweaks panel (localhost or ?tweaks=1) -->
+  <script>
+    (function () {
+      var host = location.hostname;
+      var local = host === 'localhost' || host === '127.0.0.1' || host === '';
+      var enabled = local || /(?:^|[?&])tweaks=1(?:&|$)/.test(location.search);
+      if (!enabled) return;
+      window.__TWEAKS_ENABLED__ = true;
+      function load(src, type) {
+        var s = document.createElement('script');
+        if (type) s.type = type;
+        s.src = src;
+        s.crossOrigin = 'anonymous';
+        document.head.appendChild(s);
+        return s;
+      }
+      var r = load('https://unpkg.com/react@18.3.1/umd/react.production.min.js');
+      r.onload = function () {
+        var d = load('https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js');
+        d.onload = function () {
+          var b = load('https://unpkg.com/@babel/standalone@7.29.0/babel.min.js');
+          b.onload = function () {
+            load('tweaks-panel.jsx', 'text/babel');
+            load('tweaks.jsx', 'text/babel');
+          };
+        };
+      };
+    })();
+  </script>
 </head>
 <body>
 
@@ -72,34 +123,24 @@
       <span class="brand-role">cloud-engineer.v26</span>
     </div>
 
-    <div class="status-cluster" aria-label="Live status">
+    <div class="status-cluster" aria-label="Availability">
       <span class="stat">
         <i class="stat-dot ok"></i>
-        <span class="stat-key">SYS</span>
-        <span class="stat-val" data-stat="sys">OPERATIONAL</span>
+        <span class="stat-key">STATUS</span>
+        <span class="stat-val">OPEN TO ROLES</span>
       </span>
       <span class="stat">
-        <span class="stat-key">UPTIME</span>
-        <span class="stat-val" data-stat="uptime">99.99%</span>
+        <span class="stat-key">FOCUS</span>
+        <span class="stat-val">CLOUD · PLATFORM · DEVOPS</span>
       </span>
       <span class="stat">
-        <span class="stat-key">REGION</span>
-        <span class="stat-val">EAST-US · NJ</span>
-      </span>
-      <span class="stat">
-        <span class="stat-key">LAT</span>
-        <span class="stat-val" data-stat="lat">14ms</span>
+        <span class="stat-key">BASE</span>
+        <span class="stat-val">NJ · REMOTE OK</span>
       </span>
       <span class="stat clock">
         <span class="stat-key">UTC</span>
         <span class="stat-val" data-stat="clock">--:--:--</span>
       </span>
-    </div>
-
-    <div class="viewing-now" aria-label="Live presence">
-      <span class="vn-key">VIEWING</span>
-      <span class="vn-val" id="viewing-count">1</span>
-      <span class="vn-dot"></span>
     </div>
   </div>
 </div>
@@ -140,55 +181,36 @@
       <em>still learning the quiet craft</em> of systems that don't fall over.
     </p>
 
-    <!-- TERMINAL -->
-    <div class="terminal" role="region" aria-label="Live agent log">
-      <div class="term-chrome">
-        <span class="term-dot r"></span>
-        <span class="term-dot y"></span>
-        <span class="term-dot g"></span>
-        <span class="term-path">~/ryan-amir/agent.log</span>
-        <span class="term-status"><i class="stat-dot ok"></i> STREAMING</span>
-      </div>
-      <div class="term-body" id="term-body" aria-live="polite"></div>
-    </div>
+    <p class="hero-availability">
+      <i class="stat-dot ok"></i>
+      Open to Cloud / Platform / DevOps roles · Matawan, NJ · remote-friendly
+    </p>
 
     <div class="hero-cta">
       <a href="#folio" class="btn btn-primary">
         <span class="btn-glyph">▶</span>
         <span>See the work</span>
       </a>
-      <a href="#contact" class="btn btn-ghost">
-        <span>Start a thread</span>
-        <span class="btn-glyph">↗</span>
-      </a>
-      <a href="images/Ryan_Amir_Resume.pdf?v=2026-05-28" target="_blank" rel="noopener" class="btn btn-ghost btn-mini" download="Ryan_Amir_Resume.pdf">
+      <a href="images/Ryan_Amir_Resume.pdf?v=2026-07-20" target="_blank" rel="noopener" class="btn btn-ghost" download="Ryan_Amir_Resume.pdf">
         <span>résumé.pdf</span>
         <span class="btn-glyph">↓</span>
       </a>
+      <a href="#contact" class="btn btn-ghost btn-mini">
+        <span>Start a thread</span>
+        <span class="btn-glyph">↗</span>
+      </a>
     </div>
 
-    <!-- Stats strip -->
-    <div class="stats-strip">
-      <div class="stat-card">
-        <span class="stat-card-num" data-count="3">3</span>
-        <span class="stat-card-unit">yrs</span>
-        <span class="stat-card-label">cloud engineering · azure first</span>
+    <!-- TERMINAL — secondary, below primary CTA -->
+    <div class="terminal" role="region" aria-label="Session log">
+      <div class="term-chrome">
+        <span class="term-dot r"></span>
+        <span class="term-dot y"></span>
+        <span class="term-dot g"></span>
+        <span class="term-path">~/ryan-amir/agent.log</span>
+        <span class="term-status"><i class="stat-dot ok"></i> READY</span>
       </div>
-      <div class="stat-card">
-        <span class="stat-card-num" data-count="25">25</span>
-        <span class="stat-card-unit">%</span>
-        <span class="stat-card-label">avg. infra cost reduction shipped</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-card-num" data-count="100">100</span>
-        <span class="stat-card-unit">+</span>
-        <span class="stat-card-label">virtual desktops administered</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-card-num" data-count="200">200</span>
-        <span class="stat-card-unit">ms</span>
-        <span class="stat-card-label">api p95 — sub-target</span>
-      </div>
+      <div class="term-body" id="term-body" aria-live="polite"></div>
     </div>
   </div>
 
@@ -215,7 +237,7 @@
       <!-- LEFT: portrait card -->
       <aside class="portrait-card">
         <div class="portrait-frame">
-          <img src="images/IMG_1158.JPG" alt="Ryan Amir" loading="lazy" />
+          <img src="images/ryan-portrait.jpg" alt="Ryan Amir" width="600" height="1067" loading="lazy" />
           <div class="portrait-scan"></div>
           <div class="portrait-meta">
             <span>RA · 2005</span>
@@ -247,6 +269,30 @@
           insistence that the front-end of a system should be as considered
           as its plumbing.
         </p>
+
+        <!-- Proof metrics (moved out of hero) -->
+        <div class="stats-strip profile-stats">
+          <div class="stat-card">
+            <span class="stat-card-num" data-count="3">3</span>
+            <span class="stat-card-unit">yrs</span>
+            <span class="stat-card-label">cloud engineering · azure first</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-num" data-count="25">25</span>
+            <span class="stat-card-unit">%</span>
+            <span class="stat-card-label">avg. infra cost reduction shipped</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-num" data-count="100">100</span>
+            <span class="stat-card-unit">+</span>
+            <span class="stat-card-label">virtual desktops administered</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card-num" data-count="200">200</span>
+            <span class="stat-card-unit">ms</span>
+            <span class="stat-card-label">api p95 — sub-target</span>
+          </div>
+        </div>
 
         <!-- TAB SWITCHER -->
         <div class="tabs" role="tablist">
@@ -438,18 +484,13 @@
         </div>
         <h3 class="module-title">Cloud<br/><em>Engineering</em></h3>
         <p>
-          Scalable, secure, cost-conscious cloud platforms on Azure and AWS.
-          Reusable Terraform modules, GitHub Actions pipelines, and the kind
-          of monitoring that warns you before the customer does.
+          What I take on: Azure landing zones, Terraform/Bicep modules, AVD,
+          cost controls, and observability that pages the right person.
+          What I skip: vague “cloud migrations” without an owner or a metric.
         </p>
         <ul class="module-tags">
           <li>Azure</li><li>Terraform</li><li>Bicep</li><li>CI/CD</li><li>Observability</li>
         </ul>
-        <div class="module-foot">
-          <span>availability</span>
-          <div class="mini-bar"><div style="width:96%"></div></div>
-          <span>96%</span>
-        </div>
       </article>
 
       <article class="module">
@@ -457,20 +498,14 @@
           <span class="module-num">MOD_02</span>
           <span class="module-light"></span>
         </div>
-        <h3 class="module-title">Web<br/><em>Development</em></h3>
+        <h3 class="module-title">Platform<br/><em>&amp; GitOps</em></h3>
         <p>
-          Modern, accessible interfaces with an editorial sensibility — from
-          quiet landing pages to production web apps. Care for typography,
-          performance, and the people on the other side.
+          Internal developer platforms, policy gates, drift detection, and
+          delivery pipelines that make the happy path the default path.
         </p>
         <ul class="module-tags">
-          <li>React</li><li>TypeScript</li><li>HTML/CSS</li><li>Flask</li><li>Design</li>
+          <li>GitOps</li><li>Policy</li><li>Kubernetes</li><li>GHA</li><li>Cost</li>
         </ul>
-        <div class="module-foot">
-          <span>availability</span>
-          <div class="mini-bar"><div style="width:88%"></div></div>
-          <span>88%</span>
-        </div>
       </article>
 
       <article class="module">
@@ -478,19 +513,14 @@
           <span class="module-num">MOD_03</span>
           <span class="module-light"></span>
         </div>
-        <h3 class="module-title">Automation<br/><em>&amp; DevOps</em></h3>
+        <h3 class="module-title">Product<br/><em>surfaces</em></h3>
         <p>
-          Untangling toil. Idempotent scripts, declarative infrastructure,
-          and pipelines that make deploying boring — in the best way.
+          When the platform needs a UI, I ship one — React/Next apps with the
+          same care as the plumbing underneath (CardWise, CloudPulse, booking).
         </p>
         <ul class="module-tags">
-          <li>Python</li><li>PowerShell</li><li>Bash</li><li>Runbooks</li><li>GHA</li>
+          <li>React</li><li>Next.js</li><li>TypeScript</li><li>Flask</li><li>Design</li>
         </ul>
-        <div class="module-foot">
-          <span>availability</span>
-          <div class="mini-bar"><div style="width:92%"></div></div>
-          <span>92%</span>
-        </div>
       </article>
     </div>
   </div>
@@ -519,7 +549,10 @@
       <div class="feat-grid">
         <div class="feat-media">
           <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="feat-media-link">
-            <img src="images/cloudpulse.png" alt="CloudPulse AI platform dashboard" loading="lazy" />
+            <picture>
+              <source srcset="images/cloudpulse.webp" type="image/webp" />
+              <img src="images/cloudpulse.png" alt="CloudPulse AI platform dashboard" width="1600" height="870" loading="lazy" />
+            </picture>
             <div class="feat-overlay">
               <span class="feat-overlay-chip">live · production</span>
               <span class="feat-overlay-link">open ↗</span>
@@ -554,28 +587,73 @@
             </div>
           </div>
 
-          <!-- Fake live spark + telemetry -->
-          <div class="feat-telemetry">
-            <div class="tele-row">
-              <span class="tele-label">REQ/S</span>
-              <canvas class="spark" data-spark="rps" width="280" height="32"></canvas>
-              <span class="tele-num" data-tele="rps">428</span>
+          <ul class="feat-outcomes">
+            <li><span class="fo-key">problem</span><span class="fo-val">Infra noise without a clear “what broke / what next” signal for operators.</span></li>
+            <li><span class="fo-key">built</span><span class="fo-val">React dashboard, Azure Functions API, OpenAI-assisted insights and reporting.</span></li>
+            <li><span class="fo-key">outcome</span><span class="fo-val">Live production app teams can open today — not a mock.</span></li>
+          </ul>
+
+          <details class="case-block">
+            <summary>Case notes</summary>
+            <div class="case-body">
+              <p><strong>Problem.</strong> Operators drown in metrics; they need ranked insights and a path to action, not another chart wall.</p>
+              <ul>
+                <li>Designed and shipped the observability UI end-to-end.</li>
+                <li>Wired Azure Functions + OpenAI for summarization and operational suggestions.</li>
+                <li>Focused on readable status, report flow, and automation hooks.</li>
+              </ul>
+              <p><strong>Stack.</strong> React · Azure Functions · OpenAI · cloud hosting.</p>
+              <p><strong>Proof.</strong> <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer">cloudpulse-ai.com</a></p>
             </div>
-            <div class="tele-row">
-              <span class="tele-label">CPU%</span>
-              <canvas class="spark" data-spark="cpu" width="280" height="32"></canvas>
-              <span class="tele-num" data-tele="cpu">23</span>
-            </div>
-            <div class="tele-row">
-              <span class="tele-label">P95ms</span>
-              <canvas class="spark" data-spark="p95" width="280" height="32"></canvas>
-              <span class="tele-num" data-tele="p95">187</span>
-            </div>
-          </div>
+          </details>
 
           <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             <span class="btn-glyph">▶</span>
-            <span>Read the case</span>
+            <span>Open live app</span>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Second case: Platform Control Room -->
+    <article class="case-strip" data-category="cloud">
+      <div class="case-strip-grid">
+        <div class="case-strip-media">
+          <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">
+            <picture>
+              <source srcset="images/platform.webp" type="image/webp" />
+              <img src="images/platform.png" alt="Platform Control Room dashboard" width="1600" height="870" loading="lazy" />
+            </picture>
+          </a>
+        </div>
+        <div class="case-strip-body">
+          <span class="feat-tag">CASE · 2026</span>
+          <h3>Platform Control Room</h3>
+          <p class="feat-desc">
+            Azure-ready internal developer platform for workload onboarding, policy checks,
+            GitOps delivery, drift detection, and cost governance.
+          </p>
+          <ul class="feat-outcomes">
+            <li><span class="fo-key">problem</span><span class="fo-val">Teams ship to Azure without a shared path for policy, GitOps, and cost guardrails.</span></li>
+            <li><span class="fo-key">built</span><span class="fo-val">Onboarding flows, policy checks, drift detection, and cost governance surfaces.</span></li>
+            <li><span class="fo-key">outcome</span><span class="fo-val">A single control room for platform ops — live at platformcontrolroom.com.</span></li>
+          </ul>
+          <details class="case-block">
+            <summary>Case notes</summary>
+            <div class="case-body">
+              <p><strong>Problem.</strong> Platform work scatters across tickets, pipelines, and spreadsheets — no one place to see readiness and drift.</p>
+              <ul>
+                <li>Modeled workload onboarding and policy gates for Azure-ready delivery.</li>
+                <li>Surfaced GitOps status, drift, and cost signals in one operator UI.</li>
+                <li>Kept the product oriented to platform / DevOps hiring proof, not vaporware slides.</li>
+              </ul>
+              <p><strong>Stack.</strong> Azure · GitOps · Kubernetes · policy · cost governance.</p>
+              <p><strong>Proof.</strong> <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">platformcontrolroom.com</a></p>
+            </div>
+          </details>
+          <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+            <span>Open live app</span>
+            <span class="btn-glyph">↗</span>
           </a>
         </div>
       </div>
@@ -586,7 +664,10 @@
       <article class="folio-card portfolio-item" data-category="cloud">
         <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">
           <div class="folio-media">
-            <img src="images/platform.png" alt="Platform Control Room internal developer platform dashboard" loading="lazy" />
+            <picture>
+              <source srcset="images/platform.webp" type="image/webp" />
+              <img src="images/platform.png" alt="Platform Control Room internal developer platform dashboard" width="1600" height="870" loading="lazy" />
+            </picture>
           </div>
           <div class="folio-meta">
             <div class="folio-row">
@@ -595,7 +676,7 @@
               <span class="folio-light"></span>
             </div>
             <h3>Platform Control Room</h3>
-            <p>Azure-ready internal developer platform for workload onboarding, policy checks, GitOps delivery, drift detection, and cost governance.</p>
+            <p>One control room for Azure onboarding, policy, GitOps, drift, and cost — built for platform teams.</p>
             <div class="folio-tags">
               <span>azure</span><span>gitops</span><span>kubernetes</span><span>policy</span>
             </div>
@@ -607,7 +688,10 @@
       <article class="folio-card portfolio-item" data-category="cloud">
         <a href="https://www.postmortemincidentmanager.space/" target="_blank" rel="noopener noreferrer">
           <div class="folio-media">
-            <img src="images/postmortem_manager.png" alt="Incident Postmortem Manager" loading="lazy" />
+            <picture>
+              <source srcset="images/postmortem_manager.webp" type="image/webp" />
+              <img src="images/postmortem_manager.png" alt="Incident Postmortem Manager" width="1600" height="870" loading="lazy" />
+            </picture>
           </div>
           <div class="folio-meta">
             <div class="folio-row">
@@ -616,7 +700,7 @@
               <span class="folio-light"></span>
             </div>
             <h3>Incident Postmortem Manager</h3>
-            <p>Production-ready incident platform on Azure with React, Functions, Cosmos DB, and AI-assisted root-cause analysis.</p>
+            <p>Turn incidents into searchable learning — Azure + React + Cosmos DB with AI-assisted RCA.</p>
             <div class="folio-tags">
               <span>azure</span><span>react</span><span>cosmosdb</span><span>ai</span>
             </div>
@@ -628,7 +712,10 @@
       <article class="folio-card portfolio-item" data-category="cloud">
         <a href="https://azureusermanager.com" target="_blank" rel="noopener noreferrer">
           <div class="folio-media">
-            <img src="images/azure_user_manager_img.png" alt="Azure Serverless User Manager" loading="lazy" />
+            <picture>
+              <source srcset="images/azure_user_manager_img.webp" type="image/webp" />
+              <img src="images/azure_user_manager_img.png" alt="Azure Serverless User Manager" width="1600" height="870" loading="lazy" />
+            </picture>
           </div>
           <div class="folio-meta">
             <div class="folio-row">
@@ -637,7 +724,7 @@
               <span class="folio-light"></span>
             </div>
             <h3>Azure Serverless User Manager</h3>
-            <p>Serverless REST API · Python Functions · Cosmos DB · sub-200ms p95 · full IaC via Bicep.</p>
+            <p>Serverless user API under 200ms p95 — Python Functions, Cosmos DB, full Bicep IaC.</p>
             <div class="folio-tags">
               <span>azure</span><span>functions</span><span>bicep</span><span>python</span>
             </div>
@@ -649,7 +736,10 @@
       <article class="folio-card portfolio-item" data-category="web">
         <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer">
           <div class="folio-media">
-            <img src="images/cardwise.png" alt="CardWise credit card rewards optimizer" loading="lazy" />
+            <picture>
+              <source srcset="images/cardwise.webp" type="image/webp" />
+              <img src="images/cardwise.png" alt="CardWise credit card rewards optimizer" width="1600" height="870" loading="lazy" />
+            </picture>
           </div>
           <div class="folio-meta">
             <div class="folio-row">
@@ -658,7 +748,7 @@
               <span class="folio-light"></span>
             </div>
             <h3>CardWise · Rewards Optimizer</h3>
-            <p>Pick a purchase — ranks your wallet by real dollars back, valued the way you redeem. Free, no sign-up required.</p>
+            <p>Ranks your wallet by real dollars back for any purchase — Next.js on Vercel, free demo wallet.</p>
             <div class="folio-tags">
               <span>next.js</span><span>vercel</span><span>fintech</span><span>react</span>
             </div>
@@ -670,7 +760,7 @@
       <article class="folio-card portfolio-item" data-category="web">
         <a href="https://barbershop-appointments.onrender.com/" target="_blank" rel="noopener noreferrer">
           <div class="folio-media">
-            <img src="images/barbershopimage.png" alt="Glight Cutz Booking System" loading="lazy" />
+            <img src="images/barbershopimage.png" alt="Glight Cutz Booking System" width="1024" height="553" loading="lazy" />
           </div>
           <div class="folio-meta">
             <div class="folio-row">
@@ -679,7 +769,7 @@
               <span class="folio-light"></span>
             </div>
             <h3>Glight Cutz · Booking System</h3>
-            <p>Full-stack appointment system in Python &amp; Flask · 500+ clients · 30% retention lift.</p>
+            <p>Flask booking system for a real shop — 500+ clients, ~30% retention lift.</p>
             <div class="folio-tags">
               <span>python</span><span>flask</span><span>postgres</span>
             </div>
@@ -712,8 +802,8 @@
     <div class="contact-grid">
       <div class="contact-info">
         <p class="contact-lead">
-          Working on something interesting? Hiring? Want to argue about Terraform
-          module design? <em>Write in.</em> I read every note.
+          Hiring for Cloud, Platform, or DevOps? Working on something interesting?
+          Want to argue about Terraform module design? <em>Write in.</em> I read every note.
         </p>
 
         <ul class="contact-list">
@@ -722,12 +812,8 @@
             <a href="mailto:ryanmohammadamir@gmail.com">ryanmohammadamir@gmail.com</a>
           </li>
           <li>
-            <span class="ck">PHONE</span>
-            <a href="tel:+17323975773">+1 (732) 397-5773</a>
-          </li>
-          <li>
             <span class="ck">PLACE</span>
-            <span>Matawan, New Jersey · UTC−5</span>
+            <span>Matawan, New Jersey · UTC−5 · remote OK</span>
           </li>
           <li>
             <span class="ck">GITHUB</span>
@@ -797,10 +883,10 @@
         </div>
         <span class="colo-key">// now</span>
         <ul class="now-feed" id="now-feed">
-          <li><span class="now-time">21:04</span><span class="now-tag ok">shipping</span><span>terraform module: hub-spoke v2</span></li>
-          <li><span class="now-time">20:12</span><span class="now-tag info">reading</span><span>azure well-architected · cost pillar</span></li>
-          <li><span class="now-time">19:38</span><span class="now-tag ok">deployed</span><span>cloudpulse · build #428 · green</span></li>
-          <li><span class="now-time">17:22</span><span class="now-tag info">writing</span><span>field note: incident review playbook</span></li>
+          <li><span class="now-tag ok">open</span><span>Cloud / Platform / DevOps roles · NJ + remote</span></li>
+          <li><span class="now-tag info">shipping</span><span>CardWise · credit-card rewards optimizer</span></li>
+          <li><span class="now-tag info">studying</span><span>Rutgers CS · junior · class of 2027</span></li>
+          <li><span class="now-tag ok">cert</span><span>Azure Administrator Associate · Jan 2026</span></li>
         </ul>
       </div>
       <div class="colo-block">
@@ -825,8 +911,7 @@
         <span class="colo-key">// system</span>
         <ul class="sys-list">
           <li><span>build</span><span id="footer-hash">a7f3e2c</span></li>
-          <li><span>uptime</span><span>99.99%</span></li>
-          <li><span>region</span><span>east-us</span></li>
+          <li><span>region</span><span>east-us · nj</span></li>
           <li><span>edition</span><span>№07</span></li>
         </ul>
       </div>
@@ -868,7 +953,7 @@
   <div class="agent-suggest">
     <button class="agent-chip">What's his strongest stack?</button>
     <button class="agent-chip">Tell me about CloudPulse</button>
-    <button class="agent-chip">Is he open to work?</button>
+    <button class="agent-chip">Is he open to Cloud roles?</button>
   </div>
   <form class="agent-input" id="agent-form">
     <input type="text" id="agent-input" placeholder="ask the agent…" autocomplete="off" />
@@ -880,8 +965,6 @@
 <div id="tweaks-root"></div>
 
 <script src="portfolio.js"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="tweaks.jsx"></script>
 
 </body>
 </html>

@@ -5,12 +5,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   initBoot();
   initSpotlight();
-  initViewingNow();
   initBackground();
   initClock();
   initTerminal();
-  initSparklines();
-  initLiveStats();
+  initStatCounters();
   initScrollProgress();
   initRailNav();
   initSectionInView();
@@ -33,17 +31,30 @@ document.addEventListener('DOMContentLoaded', () => {
 function initBoot() {
   const boot = document.getElementById('boot');
   if (!boot) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const seen = (() => {
+    try { return sessionStorage.getItem('folio-boot-seen') === '1'; } catch (_) { return false; }
+  })();
+
+  if (reduceMotion || seen) {
+    boot.classList.add('done');
+    boot.style.display = 'none';
+    return;
+  }
+
+  try { sessionStorage.setItem('folio-boot-seen', '1'); } catch (_) { /* noop */ }
+
   const lines = document.getElementById('boot-lines');
   const fill  = document.getElementById('boot-fill');
   const pct   = document.getElementById('boot-pct');
 
   const seq = [
-    { txt: '> establishing session…',                          ms: 220, tag: 'info' },
-    { txt: '✓ cert verified · ed25519:ryan-amir',                ms: 240, tag: 'ok'   },
-    { txt: '✓ mounting /folio · v26.0.0',                       ms: 260, tag: 'ok'   },
-    { txt: '✓ loading modules · cloud · web · ops',              ms: 280, tag: 'ok'   },
-    { txt: '· syncing telemetry · 1.2k events/sec',              ms: 240, tag: 'info' },
-    { txt: '✓ handshake complete · ready',                       ms: 220, tag: 'ok'   },
+    { txt: '> establishing session…',                          ms: 160, tag: 'info' },
+    { txt: '✓ cert verified · ed25519:ryan-amir',                ms: 180, tag: 'ok'   },
+    { txt: '✓ mounting /folio · v26.0.0',                       ms: 180, tag: 'ok'   },
+    { txt: '✓ loading modules · cloud · platform · product',    ms: 200, tag: 'ok'   },
+    { txt: '✓ handshake complete · ready',                       ms: 160, tag: 'ok'   },
   ];
 
   let p = 0;
@@ -52,7 +63,7 @@ function initBoot() {
       p = 100;
       fill.style.width = '100%';
       pct.textContent = '100%';
-      setTimeout(() => { boot.classList.add('done'); }, 250);
+      setTimeout(() => { boot.classList.add('done'); }, 200);
       return;
     }
     const { txt, ms, tag } = seq[i];
@@ -69,7 +80,7 @@ function initBoot() {
     pct.textContent = Math.round(p) + '%';
     setTimeout(() => step(i + 1), ms);
   }
-  setTimeout(() => step(0), 100);
+  setTimeout(() => step(0), 80);
 }
 
 /* ============================================
@@ -85,23 +96,6 @@ function initSpotlight() {
       document.documentElement.style.setProperty('--my', e.clientY + 'px');
     });
   });
-}
-
-/* ============================================
-   VIEWING NOW (fake-but-real-feeling presence)
-   ============================================ */
-function initViewingNow() {
-  const el = document.getElementById('viewing-count');
-  if (!el) return;
-  // seed based on time so it doesn't reset each load
-  const minute = Math.floor(Date.now() / 60000);
-  let n = 3 + (minute % 9); // 3–11
-  el.textContent = n;
-  setInterval(() => {
-    const delta = Math.random() < 0.5 ? -1 : 1;
-    n = Math.max(2, Math.min(14, n + delta));
-    el.textContent = n;
-  }, 7000 + Math.random() * 4000);
 }
 
 /* ============================================
@@ -289,122 +283,9 @@ function initTerminal() {
 }
 
 /* ============================================
-   SPARKLINES
+   STAT COUNTERS (real profile metrics)
    ============================================ */
-function initSparklines() {
-  const sparks = document.querySelectorAll('.spark');
-  const series = {};
-
-  function noisySeries(base, jitter, len) {
-    const out = [];
-    let v = base;
-    for (let i = 0; i < len; i++) {
-      v += (Math.random() - 0.5) * jitter;
-      v = Math.max(base * 0.55, Math.min(base * 1.45, v));
-      out.push(v);
-    }
-    return out;
-  }
-
-  sparks.forEach(c => {
-    const key = c.dataset.spark;
-    const base = key === 'rps' ? 420 : key === 'cpu' ? 25 : 180;
-    const jitter = key === 'rps' ? 28 : key === 'cpu' ? 6 : 10;
-    series[key] = { canvas: c, data: noisySeries(base, jitter, 64), base, jitter };
-  });
-
-  function getAccent() {
-    return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#5cf3a4';
-  }
-
-  function draw(s) {
-    const { canvas, data } = s;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (canvas.width !== w * dpr) { canvas.width = w * dpr; canvas.height = h * dpr; }
-    const ctx = canvas.getContext('2d');
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, w, h);
-
-    const min = Math.min(...data), max = Math.max(...data);
-    const accent = getAccent();
-    const range = max - min || 1;
-
-    // baseline
-    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(0, h - 2);
-    ctx.lineTo(w, h - 2);
-    ctx.stroke();
-
-    // path
-    ctx.beginPath();
-    data.forEach((v, i) => {
-      const x = (i / (data.length - 1)) * w;
-      const y = h - 3 - ((v - min) / range) * (h - 6);
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    });
-
-    // gradient fill
-    const grad = ctx.createLinearGradient(0, 0, 0, h);
-    grad.addColorStop(0, accent.replace(/oklch\(([^)]+)\)/, (_, b) => `oklch(${b} / 0.35)`));
-    grad.addColorStop(1, accent.replace(/oklch\(([^)]+)\)/, (_, b) => `oklch(${b} / 0)`));
-
-    // dup for fill
-    ctx.strokeStyle = accent;
-    ctx.lineWidth = 1.6;
-    ctx.shadowColor = accent;
-    ctx.shadowBlur = 6;
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-
-    // fill
-    ctx.lineTo(w, h);
-    ctx.lineTo(0, h);
-    ctx.closePath();
-    ctx.fillStyle = grad;
-    ctx.fill();
-  }
-
-  function tickAll() {
-    Object.values(series).forEach(s => {
-      s.data.push(s.data[s.data.length - 1] + (Math.random() - 0.5) * s.jitter);
-      const tail = s.data[s.data.length - 1];
-      const clipped = Math.max(s.base * 0.55, Math.min(s.base * 1.45, tail));
-      s.data[s.data.length - 1] = clipped;
-      if (s.data.length > 64) s.data.shift();
-      draw(s);
-    });
-  }
-  tickAll();
-  setInterval(tickAll, 1100);
-  window.addEventListener('resize', tickAll);
-}
-
-/* ============================================
-   LIVE STATS (uptime, latency, telemetry nums)
-   ============================================ */
-function initLiveStats() {
-  const lat = document.querySelector('[data-stat="lat"]');
-  if (lat) {
-    setInterval(() => {
-      const ms = Math.round(12 + Math.random() * 8);
-      lat.textContent = ms + 'ms';
-    }, 1800);
-  }
-
-  const teleMap = { rps: [380, 460], cpu: [18, 32], p95: [170, 210] };
-  Object.entries(teleMap).forEach(([k, [a, b]]) => {
-    const el = document.querySelector(`[data-tele="${k}"]`);
-    if (!el) return;
-    setInterval(() => {
-      el.textContent = Math.round(a + Math.random() * (b - a));
-    }, 1100);
-  });
-
-  // animate stat-card counters
+function initStatCounters() {
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
@@ -490,7 +371,7 @@ function initScramble() {
    ============================================ */
 function initTilt() {
   if (!window.matchMedia('(hover: hover)').matches) return;
-  const cards = document.querySelectorAll('.folio-card, .module, .feature-project');
+  const cards = document.querySelectorAll('.folio-card, .module, .feature-project, .case-strip');
   cards.forEach(card => {
     let r = 0;
     card.addEventListener('mousemove', (e) => {
@@ -604,7 +485,7 @@ function initRailNav() {
    ============================================ */
 function initSectionInView() {
   const targets = document.querySelectorAll(
-    '.section, .practice-grid .module, .folio-card, .feature-project, .contact-grid > *, .colo-grid'
+    '.section, .practice-grid .module, .folio-card, .feature-project, .case-strip, .contact-grid > *, .colo-grid'
   );
 
   const obs = new IntersectionObserver((entries) => {
@@ -795,9 +676,9 @@ FACTS:
 - Education: Rutgers University, BS Computer Science, 2023–2027.
 - Strongest stack: Azure (admin associate cert), Terraform, Bicep, GitHub Actions, Python, PowerShell, Bash, Cosmos DB, Service Bus.
 - Notable achievements: cut idle compute costs 25% via runbooks; administered Azure Virtual Desktop for 100+ users via Nerdio; sub-200ms API p95; resolved 85% of tickets on first contact at prior role.
-- Featured projects: CloudPulse (AI cloud observability — React + Azure Functions + OpenAI, live at cloudpulse-ai.com), CardWise (credit-card rewards optimizer — ranks your wallet by dollars back; Next.js on Vercel at cardwise-alpha.vercel.app), Platform Control Room (Azure IDP / GitOps), Incident Postmortem Manager (Azure + React + Cosmos DB), Azure Serverless User Manager (Python Functions + Bicep, sub-200ms p95), Glight Cutz booking system (Flask, 500+ clients).
+- Featured projects: CloudPulse (AI cloud observability — React + Azure Functions + OpenAI, live at cloudpulse-ai.com), Platform Control Room (Azure IDP / GitOps / drift / cost — platformcontrolroom.com), CardWise (credit-card rewards optimizer — Next.js on Vercel at cardwise-alpha.vercel.app), Incident Postmortem Manager (Azure + React + Cosmos DB), Azure Serverless User Manager (Python Functions + Bicep, sub-200ms p95), Glight Cutz booking system (Flask, 500+ clients).
 - Certs: Azure Administrator Associate (Jan 2026), Azure Fundamentals, AWS Cloud Practitioner, AT&T Tech Academy.
-- Open to opportunities. Best contact: ryanmohammadamir@gmail.com.
+- Open to Cloud, Platform, and DevOps roles. Based in Matawan NJ; remote-friendly. Best contact: ryanmohammadamir@gmail.com.
 
 If asked anything you don't know, say so briefly and suggest emailing Ryan.`;
 
