@@ -17,31 +17,45 @@
   <meta name="twitter:title" content="Ryan Amir — Folio №07 / Edition 2026" />
   <meta name="twitter:description" content="Cloud Engineer with 3+ years experience in Azure, Terraform, and DevOps." />
   <meta name="twitter:image" content="https://ryanamir.online/images/og-share.png" />
-  <meta name="theme-color" content="#efe7d6" />
+  <meta name="theme-color" content="#06070a" />
   <link rel="canonical" href="https://ryanamir.online/" />
   <title>Ryan Amir — Folio №07 / Edition 2026</title>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Ryan Amir",
-    "url": "https://ryanamir.online/",
-    "jobTitle": "Cloud Engineer",
-    "email": "mailto:ryanmohammadamir@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Matawan",
-      "addressRegion": "NJ",
-      "addressCountry": "US"
-    },
-    "alumniOf": {
-      "@type": "CollegeOrUniversity",
-      "name": "Rutgers University"
-    },
-    "sameAs": [
-      "https://github.com/ryana79",
-      "https://www.linkedin.com/in/ryan-amir-335143299/"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://ryanamir.online/#person",
+        "name": "Ryan Amir",
+        "url": "https://ryanamir.online/",
+        "jobTitle": "Cloud Engineer",
+        "email": "mailto:ryanmohammadamir@gmail.com",
+        "knowsAbout": ["Azure", "Terraform", "Bicep", "DevOps", "GitHub Actions", "Platform Engineering"],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Matawan",
+          "addressRegion": "NJ",
+          "addressCountry": "US"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Rutgers University"
+        },
+        "sameAs": [
+          "https://github.com/ryana79",
+          "https://www.linkedin.com/in/ryan-amir-335143299/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ryanamir.online/#website",
+        "url": "https://ryanamir.online/",
+        "name": "Ryan Amir — Folio №07",
+        "description": "Cloud Engineer portfolio — Azure, Terraform, platform engineering, and shipped product surfaces.",
+        "publisher": { "@id": "https://ryanamir.online/#person" }
+      }
     ]
   }
   </script>
@@ -51,7 +65,8 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300..700;1,300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="portfolio.css" />
-  <link rel="icon" href="images/Untitled_design-removebg.png" type="image/png" />
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="images/favicon.png" type="image/png" />
 
   <!-- React + Babel only for the Tweaks panel (localhost or ?tweaks=1) -->
   <script>
@@ -84,6 +99,8 @@
   </script>
 </head>
 <body>
+
+<a class="skip-link" href="#folio">Skip to work</a>
 
 <!-- ============================================
      BOOT OVERLAY
@@ -158,11 +175,19 @@
   </ol>
 </nav>
 
+<nav class="mobile-nav" aria-label="Mobile sections">
+  <a href="#home" class="active">00</a>
+  <a href="#about">01</a>
+  <a href="#practice">02</a>
+  <a href="#folio">03</a>
+  <a href="#contact">04</a>
+</nav>
+
 <!-- ============================================
      HERO / INDEX
      ============================================ -->
 <header id="home" class="hero">
-  <div class="container hero-inner">
+  <div class="container hero-inner" id="main">
     <div class="hero-meta">
       <span class="meta-line"><span class="meta-key">// edition</span> <span class="meta-val">07 · MMXXVI</span></span>
       <span class="meta-line"><span class="meta-key">// build</span> <span class="meta-val" id="build-hash">a7f3e2c</span></span>
@@ -295,15 +320,15 @@
         </div>
 
         <!-- TAB SWITCHER -->
-        <div class="tabs" role="tablist">
-          <button class="tab active" data-tab="experience">EXPERIENCE</button>
-          <button class="tab" data-tab="skills">SKILLS</button>
-          <button class="tab" data-tab="certs">CERTS</button>
-          <button class="tab" data-tab="education">EDUCATION</button>
+        <div class="tabs" role="tablist" aria-label="Profile details">
+          <button type="button" class="tab" role="tab" id="tabbtn-experience" data-tab="experience" aria-controls="tab-experience" aria-selected="true" tabindex="0">EXPERIENCE</button>
+          <button type="button" class="tab" role="tab" id="tabbtn-skills" data-tab="skills" aria-controls="tab-skills" aria-selected="false" tabindex="-1">SKILLS</button>
+          <button type="button" class="tab" role="tab" id="tabbtn-certs" data-tab="certs" aria-controls="tab-certs" aria-selected="false" tabindex="-1">CERTS</button>
+          <button type="button" class="tab" role="tab" id="tabbtn-education" data-tab="education" aria-controls="tab-education" aria-selected="false" tabindex="-1">EDUCATION</button>
         </div>
 
         <!-- EXPERIENCE -->
-        <div class="tab-panel active" id="tab-experience">
+        <div class="tab-panel" id="tab-experience" role="tabpanel" aria-labelledby="tabbtn-experience">
           <ol class="timeline">
             <li class="tl-item current">
               <div class="tl-bar">
@@ -316,11 +341,11 @@
                   <span class="tl-date">JUL '23 — NOW</span>
                 </div>
                 <ul class="tl-list">
-                  <li>Designed Azure infrastructure (VMs, VNets, Storage, Key Vault) with secure networking across multiple environments.</li>
-                  <li>Reduced idle compute costs <strong>25%</strong> via Automation runbooks and VM right-sizing.</li>
-                  <li>Administered Azure Virtual Desktop for <strong>100+ users</strong> through Nerdio Manager.</li>
-                  <li>Built reusable Terraform modules + GitHub Actions CI/CD for repeatable deployments.</li>
-                  <li>Event-driven workflows on Logic Apps, Service Bus, Event Grid.</li>
+                  <li>Cut idle compute spend <strong>25%</strong> with Automation runbooks and VM right-sizing.</li>
+                  <li>Run Azure Virtual Desktop for <strong>100+ users</strong> via Nerdio — golden images, profiles, fewer tickets.</li>
+                  <li>Shipped reusable Terraform modules + GitHub Actions so environments redeploy the same way every time.</li>
+                  <li>Hardened multi-env Azure networking (VNets, Key Vault, Storage) with least-privilege defaults.</li>
+                  <li>Wired event-driven flows on Logic Apps, Service Bus, and Event Grid for ops that don’t need a human in the loop.</li>
                 </ul>
               </div>
             </li>
@@ -335,90 +360,49 @@
                   <span class="tl-date">JUN '21 — JUN '23</span>
                 </div>
                 <ul class="tl-list">
-                  <li>Provisioned and maintained Citrix VMs using MCS; golden image updates &amp; patching cycles.</li>
-                  <li>Configured Azure environments (VNets, NSGs, LBs); supported IAM/RBAC audits across 2 tenants.</li>
-                  <li>Automated VM domain join with PowerShell DSC — setup time down <strong>60%</strong>.</li>
-                  <li>Monitored 20+ Citrix servers; resolved <strong>85%</strong> of tickets on first contact.</li>
+                  <li>Dropped VM domain-join setup time <strong>60%</strong> with PowerShell DSC automation.</li>
+                  <li>Cleared <strong>85%</strong> of Citrix tickets on first contact across 20+ servers.</li>
+                  <li>Kept golden images and MCS fleets current through patching cycles.</li>
+                  <li>Stood up Azure VNets / NSGs / LBs and supported IAM/RBAC audits across 2 tenants.</li>
                 </ul>
               </div>
             </li>
           </ol>
         </div>
 
-        <!-- SKILLS - oscilloscope gauges -->
-        <div class="tab-panel" id="tab-skills">
-          <div class="gauges">
-            <div class="gauge" data-level="95">
-              <div class="gauge-head">
-                <span class="gauge-name">Azure / Cloud Infra</span>
-                <span class="gauge-val">0.95</span>
-              </div>
-              <div class="gauge-track">
-                <div class="gauge-fill"></div>
-                <div class="gauge-ticks"></div>
-              </div>
-              <span class="gauge-tag">primary discipline</span>
-            </div>
-            <div class="gauge" data-level="90">
-              <div class="gauge-head">
-                <span class="gauge-name">Terraform · Bicep · IaC</span>
-                <span class="gauge-val">0.90</span>
-              </div>
-              <div class="gauge-track">
-                <div class="gauge-fill"></div>
-                <div class="gauge-ticks"></div>
-              </div>
-              <span class="gauge-tag">declarative everything</span>
-            </div>
-            <div class="gauge" data-level="85">
-              <div class="gauge-head">
-                <span class="gauge-name">CI/CD · GitHub Actions</span>
-                <span class="gauge-val">0.85</span>
-              </div>
-              <div class="gauge-track">
-                <div class="gauge-fill"></div>
-                <div class="gauge-ticks"></div>
-              </div>
-              <span class="gauge-tag">deploy on a yawn</span>
-            </div>
-            <div class="gauge" data-level="85">
-              <div class="gauge-head">
-                <span class="gauge-name">Python · PowerShell · Bash</span>
-                <span class="gauge-val">0.85</span>
-              </div>
-              <div class="gauge-track">
-                <div class="gauge-fill"></div>
-                <div class="gauge-ticks"></div>
-              </div>
-              <span class="gauge-tag">scripting · runbooks</span>
-            </div>
-            <div class="gauge" data-level="80">
-              <div class="gauge-head">
-                <span class="gauge-name">Observability · Telemetry</span>
-                <span class="gauge-val">0.80</span>
-              </div>
-              <div class="gauge-track">
-                <div class="gauge-fill"></div>
-                <div class="gauge-ticks"></div>
-              </div>
-              <span class="gauge-tag">log analytics · alerts</span>
-            </div>
-            <div class="gauge" data-level="75">
-              <div class="gauge-head">
-                <span class="gauge-name">React · Front-end</span>
-                <span class="gauge-val">0.75</span>
-              </div>
-              <div class="gauge-track">
-                <div class="gauge-fill"></div>
-                <div class="gauge-ticks"></div>
-              </div>
-              <span class="gauge-tag">stubborn habit</span>
-            </div>
+        <!-- SKILLS - stack narrative -->
+        <div class="tab-panel" id="tab-skills" role="tabpanel" aria-labelledby="tabbtn-skills" hidden>
+          <div class="stack-narrative">
+            <article class="stack-group">
+              <h4>Cloud &amp; IaC</h4>
+              <p class="stack-tools">Azure · Terraform · Bicep · Key Vault · AVD / Nerdio</p>
+              <p class="stack-why">Landing zones, modules, and environments that redeploy identically.</p>
+            </article>
+            <article class="stack-group">
+              <h4>Delivery</h4>
+              <p class="stack-tools">GitHub Actions · GitOps · policy gates · release hygiene</p>
+              <p class="stack-why">Pipelines that make the happy path the default path.</p>
+            </article>
+            <article class="stack-group">
+              <h4>Languages</h4>
+              <p class="stack-tools">Python · PowerShell · Bash · TypeScript</p>
+              <p class="stack-why">Runbooks, Functions, and glue that remove toil.</p>
+            </article>
+            <article class="stack-group">
+              <h4>Observability</h4>
+              <p class="stack-tools">Log Analytics · alerts · App Insights · operator UX</p>
+              <p class="stack-why">Signal before the customer notices — dashboards that decide.</p>
+            </article>
+            <article class="stack-group">
+              <h4>Product UI</h4>
+              <p class="stack-tools">React · Next.js · HTML/CSS · Flask</p>
+              <p class="stack-why">When the platform needs a surface, ship one with the same care as the plumbing.</p>
+            </article>
           </div>
         </div>
 
         <!-- CERTS -->
-        <div class="tab-panel" id="tab-certs">
+        <div class="tab-panel" id="tab-certs" role="tabpanel" aria-labelledby="tabbtn-certs" hidden>
           <ul class="cert-list">
             <li>
               <span class="cert-tag">CERT/01</span>
@@ -448,7 +432,7 @@
         </div>
 
         <!-- EDUCATION -->
-        <div class="tab-panel" id="tab-education">
+        <div class="tab-panel" id="tab-education" role="tabpanel" aria-labelledby="tabbtn-education" hidden>
           <div class="edu-card">
             <div class="edu-head">
               <h3>Rutgers University</h3>
@@ -484,9 +468,8 @@
         </div>
         <h3 class="module-title">Cloud<br/><em>Engineering</em></h3>
         <p>
-          What I take on: Azure landing zones, Terraform/Bicep modules, AVD,
-          cost controls, and observability that pages the right person.
-          What I skip: vague “cloud migrations” without an owner or a metric.
+          Azure landing zones, Terraform/Bicep, AVD, cost controls — skip vague
+          migrations without an owner or a metric.
         </p>
         <ul class="module-tags">
           <li>Azure</li><li>Terraform</li><li>Bicep</li><li>CI/CD</li><li>Observability</li>
@@ -500,8 +483,7 @@
         </div>
         <h3 class="module-title">Platform<br/><em>&amp; GitOps</em></h3>
         <p>
-          Internal developer platforms, policy gates, drift detection, and
-          delivery pipelines that make the happy path the default path.
+          IDPs, policy gates, drift, and pipelines where the happy path is default.
         </p>
         <ul class="module-tags">
           <li>GitOps</li><li>Policy</li><li>Kubernetes</li><li>GHA</li><li>Cost</li>
@@ -515,8 +497,7 @@
         </div>
         <h3 class="module-title">Product<br/><em>surfaces</em></h3>
         <p>
-          When the platform needs a UI, I ship one — React/Next apps with the
-          same care as the plumbing underneath (CardWise, CloudPulse, booking).
+          React/Next when the platform needs a UI — same care as the plumbing.
         </p>
         <ul class="module-tags">
           <li>React</li><li>Next.js</li><li>TypeScript</li><li>Flask</li><li>Design</li>
@@ -538,13 +519,13 @@
 
     <div class="filter-bar" role="toolbar" aria-label="Filter projects">
       <span class="filter-key">FILTER:</span>
-      <button class="filter-btn active" data-filter="all">all</button>
-      <button class="filter-btn" data-filter="cloud">cloud-engineering</button>
-      <button class="filter-btn" data-filter="web">web-development</button>
-      <span class="filter-count" id="filter-count">06 / 06</span>
+      <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">all</button>
+      <button type="button" class="filter-btn" data-filter="cloud" aria-pressed="false">cloud-engineering</button>
+      <button type="button" class="filter-btn" data-filter="web" aria-pressed="false">web-development</button>
+      <span class="filter-count" id="filter-count" aria-live="polite">04 / 04</span>
     </div>
 
-    <!-- Featured project -->
+    <!-- Featured: CloudPulse -->
     <article class="feature-project portfolio-item" data-category="cloud">
       <div class="feat-grid">
         <div class="feat-media">
@@ -563,9 +544,8 @@
           <span class="feat-tag"><i class="stat-dot ok"></i> FEATURED · 2026</span>
           <h3 class="feat-title">CloudPulse — <em>listening to a fleet of servers.</em></h3>
           <p class="feat-desc">
-            An AI-driven cloud observability platform with intelligent insights,
-            streamlined reporting and operational automation for modern
-            infrastructure teams.
+            AI-assisted cloud observability for operators who need ranked insight
+            and a next action — not another wall of charts.
           </p>
 
           <div class="feat-mini-dash">
@@ -588,35 +568,47 @@
           </div>
 
           <ul class="feat-outcomes">
-            <li><span class="fo-key">problem</span><span class="fo-val">Infra noise without a clear “what broke / what next” signal for operators.</span></li>
-            <li><span class="fo-key">built</span><span class="fo-val">React dashboard, Azure Functions API, OpenAI-assisted insights and reporting.</span></li>
-            <li><span class="fo-key">outcome</span><span class="fo-val">Live production app teams can open today — not a mock.</span></li>
+            <li><span class="fo-key">context</span><span class="fo-val">Solo-built product surface for infra / ops teams on Azure.</span></li>
+            <li><span class="fo-key">built</span><span class="fo-val">React dashboard + Functions API + OpenAI summarization / suggestions.</span></li>
+            <li><span class="fo-key">tradeoff</span><span class="fo-val">Chose Functions over App Service for bursty insight jobs and simpler ops.</span></li>
           </ul>
 
           <details class="case-block">
             <summary>Case notes</summary>
             <div class="case-body">
-              <p><strong>Problem.</strong> Operators drown in metrics; they need ranked insights and a path to action, not another chart wall.</p>
+              <p><strong>Context.</strong> Operators drown in metrics; they need “what broke / what next,” not another chart wall.</p>
+              <p><strong>Constraints.</strong> Solo build · Azure-first · ship a live demo people can open without a sales call.</p>
+              <p><strong>Architecture.</strong></p>
               <ul>
-                <li>Designed and shipped the observability UI end-to-end.</li>
-                <li>Wired Azure Functions + OpenAI for summarization and operational suggestions.</li>
-                <li>Focused on readable status, report flow, and automation hooks.</li>
+                <li>React UI for status, reports, and insight cards.</li>
+                <li>Azure Functions API for aggregation and OpenAI-assisted summaries.</li>
+                <li>Reporting flow aimed at readable ops handoff, not vanity dashboards.</li>
               </ul>
-              <p><strong>Stack.</strong> React · Azure Functions · OpenAI · cloud hosting.</p>
-              <p><strong>Proof.</strong> <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer">cloudpulse-ai.com</a></p>
+              <p><strong>Tradeoff.</strong> Serverless Functions over always-on App Service — pay for bursts, accept cold starts on rare paths.</p>
+              <p><strong>Demo path.</strong> Open the live app → scan the fleet overview → open an insight / report and note how status is ranked.</p>
+              <p class="case-links">
+                <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer">Live ↗</a>
+                <a href="https://github.com/ryana79/cloudpulse-azure-optimizer" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+              </p>
             </div>
           </details>
 
-          <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <span class="btn-glyph">▶</span>
-            <span>Open live app</span>
-          </a>
+          <div class="feat-cta-row">
+            <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              <span class="btn-glyph">▶</span>
+              <span>Open live app</span>
+            </a>
+            <a href="https://github.com/ryana79/cloudpulse-azure-optimizer" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+              <span>View source</span>
+              <span class="btn-glyph">↗</span>
+            </a>
+          </div>
         </div>
       </div>
     </article>
 
-    <!-- Second case: Platform Control Room -->
-    <article class="case-strip" data-category="cloud">
+    <!-- Case: Platform Control Room -->
+    <article class="case-strip">
       <div class="case-strip-grid">
         <div class="case-strip-media">
           <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">
@@ -627,64 +619,107 @@
           </a>
         </div>
         <div class="case-strip-body">
-          <span class="feat-tag">CASE · 2026</span>
+          <span class="feat-tag">CASE · PLATFORM · 2026</span>
           <h3>Platform Control Room</h3>
           <p class="feat-desc">
-            Azure-ready internal developer platform for workload onboarding, policy checks,
-            GitOps delivery, drift detection, and cost governance.
+            Internal developer platform for Azure onboarding, policy gates, GitOps,
+            drift, and cost — one room for platform ops.
           </p>
           <ul class="feat-outcomes">
-            <li><span class="fo-key">problem</span><span class="fo-val">Teams ship to Azure without a shared path for policy, GitOps, and cost guardrails.</span></li>
-            <li><span class="fo-key">built</span><span class="fo-val">Onboarding flows, policy checks, drift detection, and cost governance surfaces.</span></li>
-            <li><span class="fo-key">outcome</span><span class="fo-val">A single control room for platform ops — live at platformcontrolroom.com.</span></li>
+            <li><span class="fo-key">context</span><span class="fo-val">Platform / DevOps proof: shared path before workloads hit Azure.</span></li>
+            <li><span class="fo-key">built</span><span class="fo-val">Onboarding, policy checks, drift detection, cost governance UI.</span></li>
+            <li><span class="fo-key">tradeoff</span><span class="fo-val">Opinionated happy path over a generic “everything dashboard.”</span></li>
           </ul>
           <details class="case-block">
             <summary>Case notes</summary>
             <div class="case-body">
-              <p><strong>Problem.</strong> Platform work scatters across tickets, pipelines, and spreadsheets — no one place to see readiness and drift.</p>
+              <p><strong>Context.</strong> Platform work scatters across tickets, pipelines, and spreadsheets.</p>
+              <p><strong>Constraints.</strong> Azure-ready delivery · show policy + GitOps + cost in one operator surface.</p>
+              <p><strong>Architecture.</strong></p>
               <ul>
-                <li>Modeled workload onboarding and policy gates for Azure-ready delivery.</li>
-                <li>Surfaced GitOps status, drift, and cost signals in one operator UI.</li>
-                <li>Kept the product oriented to platform / DevOps hiring proof, not vaporware slides.</li>
+                <li>Workload onboarding with policy gates before promote.</li>
+                <li>GitOps / drift signals in the same view as readiness.</li>
+                <li>Cost governance surfaced next to delivery state.</li>
               </ul>
-              <p><strong>Stack.</strong> Azure · GitOps · Kubernetes · policy · cost governance.</p>
-              <p><strong>Proof.</strong> <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">platformcontrolroom.com</a></p>
+              <p><strong>Tradeoff.</strong> Narrow, opinionated control room instead of a sprawling CMDB clone.</p>
+              <p><strong>Demo path.</strong> Open live → walk onboarding / policy → check drift and cost panels.</p>
+              <p class="case-links">
+                <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">Live ↗</a>
+                <a href="https://github.com/ryana79/platform-control-room" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+              </p>
             </div>
           </details>
-          <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
-            <span>Open live app</span>
-            <span class="btn-glyph">↗</span>
-          </a>
+          <div class="feat-cta-row">
+            <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              <span class="btn-glyph">▶</span>
+              <span>Open live app</span>
+            </a>
+            <a href="https://github.com/ryana79/platform-control-room" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+              <span>View source</span>
+              <span class="btn-glyph">↗</span>
+            </a>
+          </div>
         </div>
       </div>
     </article>
 
-    <!-- Project grid -->
-    <div class="folio-grid">
-      <article class="folio-card portfolio-item" data-category="cloud">
-        <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">
-          <div class="folio-media">
+    <!-- Case: CardWise (compact) -->
+    <article class="case-strip case-strip-compact">
+      <div class="case-strip-grid">
+        <div class="case-strip-media">
+          <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer">
             <picture>
-              <source srcset="images/platform.webp" type="image/webp" />
-              <img src="images/platform.png" alt="Platform Control Room internal developer platform dashboard" width="1600" height="870" loading="lazy" />
+              <source srcset="images/cardwise.webp" type="image/webp" />
+              <img src="images/cardwise.png" alt="CardWise rewards optimizer" width="1600" height="870" loading="lazy" />
             </picture>
-          </div>
-          <div class="folio-meta">
-            <div class="folio-row">
-              <span class="folio-num">PROJ/02</span>
-              <span class="folio-year">2026</span>
-              <span class="folio-light"></span>
+          </a>
+        </div>
+        <div class="case-strip-body">
+          <span class="feat-tag">CASE · PRODUCT · 2026</span>
+          <h3>CardWise · Rewards Optimizer</h3>
+          <p class="feat-desc">
+            Rank your wallet by real dollars back for any purchase — Next.js on Vercel,
+            free demo wallet, no sign-up to try.
+          </p>
+          <ul class="feat-outcomes">
+            <li><span class="fo-key">context</span><span class="fo-val">Product taste proof: clear UX for a messy rewards decision.</span></li>
+            <li><span class="fo-key">built</span><span class="fo-val">Category → amount → ranked cards with valuation-aware dollars back.</span></li>
+            <li><span class="fo-key">tradeoff</span><span class="fo-val">Demo wallet first so value is obvious before account friction.</span></li>
+          </ul>
+          <details class="case-block">
+            <summary>Case notes</summary>
+            <div class="case-body">
+              <p><strong>Context.</strong> People leave money on the table when the “right card” is non-obvious.</p>
+              <p><strong>Constraints.</strong> Fast Next.js ship · works without sign-up · honest about valuation assumptions.</p>
+              <p><strong>Architecture.</strong></p>
+              <ul>
+                <li>Optimize flow: category / merchant + amount → ranked wallet.</li>
+                <li>Valuation settings so “points” become comparable dollars.</li>
+                <li>Deployed on Vercel for quick iteration.</li>
+              </ul>
+              <p><strong>Tradeoff.</strong> Lead with a demo wallet instead of forcing auth — prove the product in one screen.</p>
+              <p><strong>Demo path.</strong> Open Optimize → pick Dining → set $100 → read Top Pick vs other cards.</p>
+              <p class="case-links">
+                <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer">Live ↗</a>
+                <span class="case-private">source · private</span>
+              </p>
             </div>
-            <h3>Platform Control Room</h3>
-            <p>One control room for Azure onboarding, policy, GitOps, drift, and cost — built for platform teams.</p>
-            <div class="folio-tags">
-              <span>azure</span><span>gitops</span><span>kubernetes</span><span>policy</span>
-            </div>
-            <span class="folio-arrow">↗ open</span>
+          </details>
+          <div class="feat-cta-row">
+            <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              <span class="btn-glyph">▶</span>
+              <span>Open live app</span>
+            </a>
+            <span class="btn btn-ghost btn-disabled" title="Repository is private" aria-disabled="true">
+              <span>source · private</span>
+            </span>
           </div>
-        </a>
-      </article>
+        </div>
+      </div>
+    </article>
 
+    <!-- Project grid (unique only — PCR & CardWise live in case strips) -->
+    <div class="folio-grid">
       <article class="folio-card portfolio-item" data-category="cloud">
         <a href="https://www.postmortemincidentmanager.space/" target="_blank" rel="noopener noreferrer">
           <div class="folio-media">
@@ -695,7 +730,7 @@
           </div>
           <div class="folio-meta">
             <div class="folio-row">
-              <span class="folio-num">PROJ/03</span>
+              <span class="folio-num">PROJ/02</span>
               <span class="folio-year">2026</span>
               <span class="folio-light"></span>
             </div>
@@ -719,7 +754,7 @@
           </div>
           <div class="folio-meta">
             <div class="folio-row">
-              <span class="folio-num">PROJ/04</span>
+              <span class="folio-num">PROJ/03</span>
               <span class="folio-year">2025</span>
               <span class="folio-light"></span>
             </div>
@@ -734,42 +769,21 @@
       </article>
 
       <article class="folio-card portfolio-item" data-category="web">
-        <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer">
+        <a href="https://barbershop-appointments.onrender.com/" target="_blank" rel="noopener noreferrer">
           <div class="folio-media">
             <picture>
-              <source srcset="images/cardwise.webp" type="image/webp" />
-              <img src="images/cardwise.png" alt="CardWise credit card rewards optimizer" width="1600" height="870" loading="lazy" />
+              <source srcset="images/barbershopimage.webp" type="image/webp" />
+              <img src="images/barbershopimage.png" alt="Glight Cutz Booking System" width="1024" height="553" loading="lazy" />
             </picture>
           </div>
           <div class="folio-meta">
             <div class="folio-row">
-              <span class="folio-num">PROJ/05</span>
-              <span class="folio-year">2026</span>
-              <span class="folio-light"></span>
-            </div>
-            <h3>CardWise · Rewards Optimizer</h3>
-            <p>Ranks your wallet by real dollars back for any purchase — Next.js on Vercel, free demo wallet.</p>
-            <div class="folio-tags">
-              <span>next.js</span><span>vercel</span><span>fintech</span><span>react</span>
-            </div>
-            <span class="folio-arrow">↗ open</span>
-          </div>
-        </a>
-      </article>
-
-      <article class="folio-card portfolio-item" data-category="web">
-        <a href="https://barbershop-appointments.onrender.com/" target="_blank" rel="noopener noreferrer">
-          <div class="folio-media">
-            <img src="images/barbershopimage.png" alt="Glight Cutz Booking System" width="1024" height="553" loading="lazy" />
-          </div>
-          <div class="folio-meta">
-            <div class="folio-row">
-              <span class="folio-num">PROJ/06</span>
+              <span class="folio-num">PROJ/04</span>
               <span class="folio-year">2024</span>
               <span class="folio-light"></span>
             </div>
             <h3>Glight Cutz · Booking System</h3>
-            <p>Flask booking system for a real shop — 500+ clients, ~30% retention lift.</p>
+            <p>Flask booking for a real shop — 500+ clients, ~30% retention lift.</p>
             <div class="folio-tags">
               <span>python</span><span>flask</span><span>postgres</span>
             </div>
@@ -780,7 +794,7 @@
     </div>
 
     <div class="folio-foot">
-      <span class="folio-foot-meta">more on github · 12+ public repos</span>
+      <span class="folio-foot-meta">more on github · public repos + private product work</span>
       <a href="https://github.com/ryana79" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
         <span>github.com/ryana79</span>
         <span class="btn-glyph">↗</span>
@@ -852,8 +866,13 @@
           </label>
           <label>
             <span class="form-key">// subject</span>
-            <input type="text" name="subject" placeholder="what is this regarding?" required />
+            <input type="text" name="subject" id="contact-subject" placeholder="what is this regarding?" required />
           </label>
+          <div class="subject-chips" role="group" aria-label="Subject presets">
+            <button type="button" class="subject-chip" data-subject="Hiring · Cloud / Platform / DevOps role">Hiring · Cloud role</button>
+            <button type="button" class="subject-chip" data-subject="Project collaboration">Project collab</button>
+            <button type="button" class="subject-chip" data-subject="General hello">Other</button>
+          </div>
           <label>
             <span class="form-key">// message</span>
             <textarea name="message" placeholder="say hello." required rows="5"></textarea>

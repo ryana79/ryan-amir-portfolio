@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTilt();
   initMagnetic();
   initTabs();
-  initGauges();
   initFilter();
+  initSubjectChips();
   initContactForm();
   initSmoothScroll();
   initCtaMini();
@@ -104,11 +104,21 @@ function initSpotlight() {
 function initBackground() {
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    canvas.style.display = 'none';
+    return;
+  }
   const ctx = canvas.getContext('2d');
 
   let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
   let nodes = [];
-  const NODE_COUNT_BASE = 56;
+  let raf = 0;
+  let running = true;
+
+  function nodeBudget() {
+    const base = w <= 720 ? 18 : 56;
+    return Math.max(10, Math.round(base * (Math.min(w, 1400) / 1400)));
+  }
 
   function resize() {
     w = window.innerWidth;
@@ -118,7 +128,7 @@ function initBackground() {
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const count = Math.round(NODE_COUNT_BASE * (Math.min(w, 1400) / 1400));
+    const count = nodeBudget();
     nodes = Array.from({ length: count }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
@@ -136,10 +146,10 @@ function initBackground() {
   }
 
   function tick() {
+    if (!running) return;
     ctx.clearRect(0, 0, w, h);
     const accent = readAccent();
 
-    // update + draw nodes
     for (const n of nodes) {
       n.x += n.vx;
       n.y += n.vy;
@@ -147,7 +157,6 @@ function initBackground() {
       if (n.y < 0 || n.y > h) n.vy *= -1;
     }
 
-    // lines
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const a = nodes[i], b = nodes[j];
@@ -164,16 +173,33 @@ function initBackground() {
         }
       }
     }
-    // dots
     for (const n of nodes) {
       ctx.fillStyle = accent.replace(/oklch\(([^)]+)\)/, (_, body) => `oklch(${body} / 0.55)`);
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
       ctx.fill();
     }
-    requestAnimationFrame(tick);
+    raf = requestAnimationFrame(tick);
   }
-  tick();
+
+  function setRunning(on) {
+    if (on === running) return;
+    running = on;
+    if (running) raf = requestAnimationFrame(tick);
+    else cancelAnimationFrame(raf);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    setRunning(!document.hidden);
+  });
+
+  // Pause when canvas is far off-screen (scrolled deep into page)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => setRunning(e.isIntersecting && !document.hidden));
+  }, { threshold: 0.01 });
+  io.observe(canvas);
+
+  raf = requestAnimationFrame(tick);
 }
 
 /* ============================================
@@ -203,40 +229,19 @@ function initTerminal() {
   const seed = [
     ['init', "ssh ryan-amir@folio.dev"],
     ['ok',   "fingerprint verified · session opened"],
-    ['info', "loading modules: cloud · web · automation"],
-    ['ok',   "✓ cloud-engineering        [ 95% ]"],
-    ['ok',   "✓ infrastructure-as-code   [ 90% ]"],
-    ['ok',   "✓ ci/cd pipelines          [ 85% ]"],
-    ['info', "scanning recent commits · last 30 days"],
-    ['info', "12 commits · 4 PRs merged · 0 incidents"],
-    ['ok',   "ready · open to work"],
-    ['warn', "tip: type 'help' in agent panel ↘"],
+    ['info', "loading modules: cloud · platform · product"],
+    ['ok',   "✓ azure · terraform · github actions"],
+    ['ok',   "ready · open to Cloud / Platform / DevOps roles"],
+    ['warn', "tip: press / for the agent · or scroll to folio"],
   ];
 
-  const events = [
-    ['info', "deploy → astro-prod · west-us : SUCCESS"],
-    ['ok',   "terraform plan: 0 to add, 2 to change"],
-    ['info', "metric: api.p95 · 187ms · ok"],
-    ['warn', "cost-alert: vm-batch-03 right-sized · -18%"],
-    ['ok',   "github actions · build #428 · green"],
-    ['info', "ssh keys rotated · key-vault sync ok"],
-    ['ok',   "bicep → resource group 'rg-folio' · OK"],
-    ['info', "log analytics · 0 errors in last 24h"],
-    ['warn', "azure-monitor alert · resolved < 4m"],
-    ['ok',   "fslogix profile sync · 100 users · OK"],
-    ['info', "k8s ingress refresh · zero downtime"],
-    ['ok',   "service bus depth: 0 messages"],
-    ['ok',   "agent online · ready for queries"],
-  ];
-
-  let idx = 0;
   function ts() {
     const d = new Date();
     return [d.getHours(), d.getMinutes(), d.getSeconds()]
       .map(n => String(n).padStart(2, '0')).join(':');
   }
 
-  function writeLine(tag, text, instant) {
+  function writeLine(tag, text) {
     const line = document.createElement('span');
     line.className = 'term-line';
     const t = document.createElement('span');
@@ -252,8 +257,6 @@ function initTerminal() {
     body2.textContent = ' ' + text;
     line.append(t, p, tagEl, body2);
     body.appendChild(line);
-
-    while (body.children.length > 11) body.removeChild(body.firstChild);
   }
 
   function bootSeed(i = 0) {
@@ -261,25 +264,13 @@ function initTerminal() {
       const cursor = document.createElement('span');
       cursor.className = 'term-cursor';
       body.appendChild(cursor);
-      streamLoop();
-      return;
+      return; // freeze — no infinite synthetic stream
     }
     writeLine(seed[i][0], seed[i][1]);
-    setTimeout(() => bootSeed(i + 1), 240 + Math.random() * 180);
+    setTimeout(() => bootSeed(i + 1), 200 + Math.random() * 120);
   }
 
-  function streamLoop() {
-    const cursor = body.querySelector('.term-cursor');
-    setInterval(() => {
-      const [tag, txt] = events[idx % events.length];
-      idx++;
-      if (cursor) body.removeChild(cursor);
-      writeLine(tag, txt);
-      if (cursor) body.appendChild(cursor);
-    }, 3400);
-  }
-
-  setTimeout(() => bootSeed(0), 350);
+  setTimeout(() => bootSeed(0), 280);
 }
 
 /* ============================================
@@ -468,7 +459,7 @@ function initScrollProgress() {
    ============================================ */
 function initRailNav() {
   const sections = document.querySelectorAll('section[id], header[id]');
-  const links = document.querySelectorAll('.rail-nav a');
+  const links = document.querySelectorAll('.rail-nav a, .mobile-nav a');
 
   const setActive = () => {
     let current = '';
@@ -506,56 +497,48 @@ function initSectionInView() {
 }
 
 /* ============================================
-   TABS
+   TABS (WAI-ARIA)
    ============================================ */
 function initTabs() {
-  const tabs = document.querySelectorAll('.tab');
-  const panels = document.querySelectorAll('.tab-panel');
+  const tablist = document.querySelector('.tabs[role="tablist"]');
+  if (!tablist) return;
+  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+  const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls'))).filter(Boolean);
+
+  function activate(tab, { focusTab = true } = {}) {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(p => {
+      const on = p.id === tab.getAttribute('aria-controls');
+      p.classList.toggle('active', on);
+      if (on) p.removeAttribute('hidden');
+      else p.setAttribute('hidden', '');
+    });
+    if (focusTab) tab.focus();
+  }
+
+  // ensure initial state
+  const initial = tabs.find(t => t.getAttribute('aria-selected') === 'true') || tabs[0];
+  if (initial) activate(initial, { focusTab: false });
+
   tabs.forEach(t => {
-    t.addEventListener('click', () => {
-      const id = t.dataset.tab;
-      tabs.forEach(x => x.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
-      t.classList.add('active');
-      const panel = document.getElementById('tab-' + id);
-      if (panel) panel.classList.add('active');
-      if (id === 'skills') replayGauges();
+    t.addEventListener('click', () => activate(t));
+    t.addEventListener('keydown', (e) => {
+      const i = tabs.indexOf(t);
+      let next = -1;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = tabs.length - 1;
+      if (next < 0) return;
+      e.preventDefault();
+      activate(tabs[next]);
     });
   });
-}
-
-/* ============================================
-   GAUGES
-   ============================================ */
-let gaugesAnimated = false;
-
-function initGauges() {
-  const wrap = document.getElementById('tab-skills');
-  if (!wrap) return;
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting && !gaugesAnimated && wrap.classList.contains('active')) {
-        runGauges();
-      }
-    });
-  }, { threshold: 0.2 });
-  obs.observe(wrap);
-}
-
-function runGauges() {
-  document.querySelectorAll('.gauge').forEach((g, i) => {
-    const lv = parseInt(g.dataset.level, 10) || 0;
-    const fill = g.querySelector('.gauge-fill');
-    if (!fill) return;
-    fill.style.width = '0%';
-    setTimeout(() => { fill.style.width = lv + '%'; }, 120 + i * 110);
-  });
-  gaugesAnimated = true;
-}
-
-function replayGauges() {
-  gaugesAnimated = false;
-  setTimeout(runGauges, 60);
 }
 
 /* ============================================
@@ -573,8 +556,12 @@ function initFilter() {
 
   buttons.forEach(b => {
     b.addEventListener('click', () => {
-      buttons.forEach(x => x.classList.remove('active'));
+      buttons.forEach(x => {
+        x.classList.remove('active');
+        x.setAttribute('aria-pressed', 'false');
+      });
       b.classList.add('active');
+      b.setAttribute('aria-pressed', 'true');
       const f = b.dataset.filter;
       let visible = 0;
       items.forEach((item, i) => {
@@ -582,10 +569,7 @@ function initFilter() {
         item.style.display = show ? '' : 'none';
         if (show) {
           visible++;
-          item.style.animation = 'none';
-          requestAnimationFrame(() => {
-            item.style.animation = `panel-in 0.45s var(--ease) ${i * 0.05}s both`;
-          });
+          item.style.animation = `panel-in 0.45s var(--ease) ${i * 0.05}s both`;
         }
       });
       updateCount(visible, items.length);
@@ -615,16 +599,29 @@ function initContactForm() {
       });
       if (res.ok) {
         msg.className = 'form-message is-success';
-        msg.textContent = '✓ message received · I\'ll write back soon';
+        msg.innerHTML = '<span class="form-ok">✓ DELIVERED</span> message queued · reply within 24h on weekdays';
         form.reset();
       } else {
         msg.className = 'form-message is-error';
-        msg.textContent = '✕ delivery failed · please try again';
+        msg.textContent = '✕ delivery failed · email ryanmohammadamir@gmail.com';
       }
     } catch (err) {
       msg.className = 'form-message is-error';
-      msg.textContent = '✕ network error · please try again';
+      msg.textContent = '✕ network error · email ryanmohammadamir@gmail.com';
     }
+  });
+}
+
+function initSubjectChips() {
+  const input = document.getElementById('contact-subject');
+  const chips = document.querySelectorAll('.subject-chip');
+  if (!input || !chips.length) return;
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      input.value = chip.dataset.subject || chip.textContent.trim();
+      input.focus();
+      chips.forEach(c => c.classList.toggle('active', c === chip));
+    });
   });
 }
 
@@ -676,7 +673,7 @@ FACTS:
 - Education: Rutgers University, BS Computer Science, 2023–2027.
 - Strongest stack: Azure (admin associate cert), Terraform, Bicep, GitHub Actions, Python, PowerShell, Bash, Cosmos DB, Service Bus.
 - Notable achievements: cut idle compute costs 25% via runbooks; administered Azure Virtual Desktop for 100+ users via Nerdio; sub-200ms API p95; resolved 85% of tickets on first contact at prior role.
-- Featured projects: CloudPulse (AI cloud observability — React + Azure Functions + OpenAI, live at cloudpulse-ai.com), Platform Control Room (Azure IDP / GitOps / drift / cost — platformcontrolroom.com), CardWise (credit-card rewards optimizer — Next.js on Vercel at cardwise-alpha.vercel.app), Incident Postmortem Manager (Azure + React + Cosmos DB), Azure Serverless User Manager (Python Functions + Bicep, sub-200ms p95), Glight Cutz booking system (Flask, 500+ clients).
+- Featured projects: CloudPulse (AI observability — React + Azure Functions + OpenAI; github.com/ryana79/cloudpulse-azure-optimizer; live cloudpulse-ai.com), Platform Control Room (Azure IDP / GitOps / drift / cost; github.com/ryana79/platform-control-room; live platformcontrolroom.com), CardWise (rewards optimizer — Next.js on Vercel; source private; live cardwise-alpha.vercel.app), Incident Postmortem Manager, Azure Serverless User Manager (sub-200ms p95), Glight Cutz (Flask booking, 500+ clients).
 - Certs: Azure Administrator Associate (Jan 2026), Azure Fundamentals, AWS Cloud Practitioner, AT&T Tech Academy.
 - Open to Cloud, Platform, and DevOps roles. Based in Matawan NJ; remote-friendly. Best contact: ryanmohammadamir@gmail.com.
 
@@ -725,7 +722,7 @@ If asked anything you don't know, say so briefly and suggest emailing Ryan.`;
     if (e.key === 'Escape' && !panel.hidden) close();
   });
 
-  function addMsg(role, text) {
+  function addMsg(role, text, htmlExtra) {
     const wrap = document.createElement('div');
     wrap.className = 'agent-msg agent-msg-' + (role === 'user' ? 'user' : 'bot');
     const r = document.createElement('span');
@@ -734,10 +731,21 @@ If asked anything you don't know, say so briefly and suggest emailing Ryan.`;
     const t = document.createElement('span');
     t.className = 'agent-msg-text';
     t.textContent = text;
+    if (htmlExtra) t.appendChild(htmlExtra);
     wrap.append(r, t);
     body.appendChild(wrap);
     body.scrollTop = body.scrollHeight;
     return t;
+  }
+
+  function mailtoFallback(question) {
+    const a = document.createElement('a');
+    a.href = 'mailto:ryanmohammadamir@gmail.com?subject=' +
+      encodeURIComponent('Portfolio question') +
+      '&body=' + encodeURIComponent(question || '');
+    a.textContent = 'email Ryan →';
+    a.className = 'agent-mail-link';
+    return a;
   }
 
   function showTyping() {
@@ -759,13 +767,30 @@ If asked anything you don't know, say so briefly and suggest emailing Ryan.`;
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: q }),
       });
-      const data = await res.json();
       typing.remove();
-      const t = (data.text || '').trim() || '// no response — try emailing ryan at ryanmohammadamir@gmail.com';
+      if (!res.ok) {
+        const space = document.createTextNode(' ');
+        const frag = document.createDocumentFragment();
+        frag.append(space, mailtoFallback(q));
+        addMsg('agent', '// agent offline — ', frag);
+        return;
+      }
+      const data = await res.json();
+      const t = (data.text || '').trim();
+      if (!t) {
+        const space = document.createTextNode(' ');
+        const frag = document.createDocumentFragment();
+        frag.append(space, mailtoFallback(q));
+        addMsg('agent', '// empty reply — ', frag);
+        return;
+      }
       addMsg('agent', t);
     } catch (_) {
       typing.remove();
-      addMsg('agent', '// connection error — try emailing ryan directly at ryanmohammadamir@gmail.com');
+      const space = document.createTextNode(' ');
+      const frag = document.createDocumentFragment();
+      frag.append(space, mailtoFallback(q));
+      addMsg('agent', '// connection error — ', frag);
     }
   }
 
