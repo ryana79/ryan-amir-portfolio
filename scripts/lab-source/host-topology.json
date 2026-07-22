@@ -1,0 +1,85 @@
+{
+  "layer": "host",
+  "dataClassification": "public-self-architecture",
+  "description": "How CloudPulse itself runs — derived from k8s/Helm/README. Not an employer subscription.",
+  "nodes": [
+    {
+      "id": "cp-web",
+      "type": "Next.js",
+      "category": "frontend",
+      "environment": "production",
+      "region": "k8s-cluster",
+      "label": "CloudPulse Web",
+      "tags": { "owner": "cloudpulse", "env": "prod", "component": "web" },
+      "iacRef": "k8s/web-deployment.yaml"
+    },
+    {
+      "id": "cp-api",
+      "type": "FastAPI",
+      "category": "backend",
+      "environment": "production",
+      "region": "k8s-cluster",
+      "label": "CloudPulse API",
+      "tags": { "owner": "cloudpulse", "env": "prod", "component": "api" },
+      "iacRef": "k8s/api-deployment.yaml"
+    },
+    {
+      "id": "cp-db",
+      "type": "SQLAlchemy/DB",
+      "category": "data",
+      "environment": "production",
+      "region": "managed",
+      "label": "App Database",
+      "tags": { "owner": "cloudpulse", "env": "prod", "component": "db" },
+      "iacRef": "apps/api"
+    },
+    {
+      "id": "cp-entra",
+      "type": "Microsoft Entra ID",
+      "category": "identity",
+      "environment": "shared",
+      "region": "global",
+      "label": "Entra ID (MSAL/OBO)",
+      "tags": { "owner": "cloudpulse", "env": "shared", "component": "auth" }
+    },
+    {
+      "id": "cp-openrouter",
+      "type": "OpenRouter/Grok",
+      "category": "ai",
+      "environment": "shared",
+      "region": "external",
+      "label": "Copilot LLM",
+      "tags": { "owner": "cloudpulse", "env": "shared", "component": "copilot" }
+    },
+    {
+      "id": "cp-ingress",
+      "type": "Ingress",
+      "category": "network",
+      "environment": "production",
+      "region": "k8s-cluster",
+      "label": "Ingress",
+      "tags": { "owner": "cloudpulse", "env": "prod", "component": "ingress" },
+      "iacRef": "k8s/ingress.yaml"
+    },
+    {
+      "id": "cp-render-api",
+      "type": "Render",
+      "category": "hosting",
+      "environment": "demo",
+      "region": "render",
+      "label": "Render API (demo path)",
+      "tags": { "owner": "cloudpulse", "env": "demo", "component": "api" },
+      "iacRef": "render.yaml"
+    }
+  ],
+  "edges": [
+    { "id": "e-ing-web", "source": "cp-ingress", "target": "cp-web", "label": "routes", "relationshipType": "routes" },
+    { "id": "e-ing-api", "source": "cp-ingress", "target": "cp-api", "label": "routes", "relationshipType": "routes" },
+    { "id": "e-web-api", "source": "cp-web", "target": "cp-api", "label": "calls", "relationshipType": "calls" },
+    { "id": "e-web-entra", "source": "cp-web", "target": "cp-entra", "label": "MSAL", "relationshipType": "auth" },
+    { "id": "e-api-entra", "source": "cp-api", "target": "cp-entra", "label": "OBO", "relationshipType": "auth" },
+    { "id": "e-api-db", "source": "cp-api", "target": "cp-db", "label": "persists", "relationshipType": "data" },
+    { "id": "e-api-llm", "source": "cp-api", "target": "cp-openrouter", "label": "copilot", "relationshipType": "ai" },
+    { "id": "e-render-api", "source": "cp-render-api", "target": "cp-api", "label": "demo host", "relationshipType": "hosts" }
+  ]
+}

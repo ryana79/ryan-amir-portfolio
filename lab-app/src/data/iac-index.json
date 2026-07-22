@@ -1,0 +1,40 @@
+{
+  "dataClassification": "public-self-architecture",
+  "entries": {
+    "cp-web": {
+      "path": "k8s/web-deployment.yaml",
+      "kind": "k8s",
+      "snippetStart": 1,
+      "snippetEnd": 40,
+      "note": "Deployment for Next.js web workload in namespace cloudpulse"
+    },
+    "cp-api": {
+      "path": "k8s/api-deployment.yaml",
+      "kind": "k8s",
+      "snippetStart": 1,
+      "snippetEnd": 40,
+      "note": "Deployment for FastAPI API workload"
+    },
+    "cp-ingress": {
+      "path": "k8s/ingress.yaml",
+      "kind": "k8s",
+      "snippetStart": 1,
+      "snippetEnd": 30,
+      "note": "Ingress routing to web and API services"
+    },
+    "cp-render-api": {
+      "path": "render.yaml",
+      "kind": "yaml",
+      "snippetStart": 1,
+      "snippetEnd": 40,
+      "note": "Render blueprint for API demo path"
+    },
+    "cp-db": {
+      "path": "apps/api",
+      "kind": "python",
+      "snippetStart": 1,
+      "snippetEnd": 20,
+      "note": "SQLAlchemy models and session wiring under FastAPI"
+    }
+  }
+}

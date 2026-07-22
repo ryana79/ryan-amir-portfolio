@@ -1514,6 +1514,18 @@ img { max-width: 100%; display: block; }
   opacity: 0.98;
 }
 
+/* Second flagship — larger than compact PCR, still below CardWise featured */
+.case-strip-flagship {
+  margin-top: 8px;
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+.case-strip-flagship .case-strip-media {
+  min-height: 280px;
+}
+.case-strip-flagship .feat-cta-row {
+  margin-top: 4px;
+}
+
 .feat-cta-row {
   display: flex;
   flex-wrap: wrap;

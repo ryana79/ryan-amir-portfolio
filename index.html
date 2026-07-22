@@ -522,44 +522,45 @@
       <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">all</button>
       <button type="button" class="filter-btn" data-filter="cloud" aria-pressed="false">cloud-engineering</button>
       <button type="button" class="filter-btn" data-filter="web" aria-pressed="false">web-development</button>
-      <span class="filter-count" id="filter-count" aria-live="polite">04 / 04</span>
+      <span class="filter-count" id="filter-count" aria-live="polite">05 / 05</span>
     </div>
 
-    <!-- Featured: CloudPulse -->
-    <article class="feature-project portfolio-item" data-category="cloud">
+    <!-- Featured: CardWise -->
+    <article class="feature-project portfolio-item" data-category="web">
       <div class="feat-grid">
         <div class="feat-media">
-          <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="feat-media-link">
+          <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="feat-media-link">
             <picture>
-              <source srcset="images/cloudpulse.webp" type="image/webp" />
-              <img src="images/cloudpulse.png" alt="CloudPulse AI platform dashboard" width="1600" height="870" loading="lazy" />
+              <source srcset="images/cardwise.webp" type="image/webp" />
+              <img src="images/cardwise.png" alt="CardWise credit card rewards optimizer" width="1024" height="553" loading="lazy" />
             </picture>
             <div class="feat-overlay">
-              <span class="feat-overlay-chip">live · production</span>
+              <span class="feat-overlay-chip">live · demo wallet</span>
               <span class="feat-overlay-link">open ↗</span>
             </div>
           </a>
         </div>
         <div class="feat-body">
-          <span class="feat-tag"><i class="stat-dot ok"></i> FEATURED · 2026</span>
-          <h3 class="feat-title">CloudPulse — <em>listening to a fleet of servers.</em></h3>
+          <span class="feat-tag"><i class="stat-dot ok"></i> FEATURED · PRODUCT · 2026</span>
+          <h3 class="feat-title">CardWise — <em>swipe the right card.</em></h3>
           <p class="feat-desc">
-            AI-assisted cloud observability for operators who need ranked insight
-            and a next action — not another wall of charts.
+            A personalized credit-card recommendation platform that ranks your wallet
+            by estimated dollars back for a purchase — spending category, reward preferences,
+            fees, and valuation stance. Educational estimates, not financial advice.
           </p>
 
           <div class="feat-mini-dash">
             <div class="mini-stat">
               <span class="mini-key">stack</span>
-              <span class="mini-val">React · Azure Functions · OpenAI</span>
+              <span class="mini-val">Next.js · TypeScript · Vercel</span>
             </div>
             <div class="mini-stat">
               <span class="mini-key">role</span>
-              <span class="mini-val">engineering + design</span>
+              <span class="mini-val">product + engineering</span>
             </div>
             <div class="mini-stat">
               <span class="mini-key">status</span>
-              <span class="mini-val"><i class="stat-dot ok"></i> live</span>
+              <span class="mini-val"><i class="stat-dot ok"></i> live demo</span>
             </div>
             <div class="mini-stat">
               <span class="mini-key">year</span>
@@ -568,35 +569,79 @@
           </div>
 
           <ul class="feat-outcomes">
-            <li><span class="fo-key">context</span><span class="fo-val">Solo-built product surface for infra / ops teams on Azure.</span></li>
-            <li><span class="fo-key">built</span><span class="fo-val">React dashboard + Functions API + OpenAI summarization / suggestions.</span></li>
-            <li><span class="fo-key">tradeoff</span><span class="fo-val">Chose Functions over App Service for bursty insight jobs and simpler ops.</span></li>
+            <li><span class="fo-key">problem</span><span class="fo-val">The “right card” for a purchase is non-obvious across issuers and valuations.</span></li>
+            <li><span class="fo-key">built</span><span class="fo-val">Deterministic ranking over a maintained catalog + demo wallet — no signup to try.</span></li>
+            <li><span class="fo-key">outcome</span><span class="fo-val">Explainable dollars-back estimates with clear assumptions.</span></li>
           </ul>
 
+          <div class="feat-cta-row">
+            <a href="/projects/cardwise/" class="btn btn-primary">
+              <span class="btn-glyph">▶</span>
+              <span>View case study</span>
+            </a>
+            <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+              <span>Open demo</span>
+              <span class="btn-glyph">↗</span>
+            </a>
+            <span class="btn btn-ghost btn-disabled" title="Repository is private" aria-disabled="true">
+              <span>source · private</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Flagship: CloudPulse -->
+    <article class="case-strip case-strip-flagship portfolio-item" data-category="cloud">
+      <div class="case-strip-grid">
+        <div class="case-strip-media">
+          <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer">
+            <picture>
+              <source srcset="images/cloudpulse.webp" type="image/webp" />
+              <img src="images/cloudpulse.png" alt="CloudPulse Azure optimization console" width="1600" height="870" loading="lazy" />
+            </picture>
+          </a>
+        </div>
+        <div class="case-strip-body">
+          <span class="feat-tag"><i class="stat-dot ok"></i> FLAGSHIP · AZURE · 2026</span>
+          <h3>CloudPulse — Azure optimization console</h3>
+          <p class="feat-desc">
+            Brings resource inventory, cost visibility, operational findings, and an
+            AI-assisted copilot into one engineering-focused interface for Azure teams.
+          </p>
+          <ul class="feat-outcomes">
+            <li><span class="fo-key">stack</span><span class="fo-val">Next.js · FastAPI · Entra ID · OpenRouter/Grok</span></li>
+            <li><span class="fo-key">built</span><span class="fo-val">Findings engine, cost/anomaly views, MSAL auth path, demo/mock mode.</span></li>
+            <li><span class="fo-key">host</span><span class="fo-val">k8s/Helm charts + Render API blueprint — not Portal cosplay.</span></li>
+          </ul>
           <details class="case-block">
             <summary>Case notes</summary>
             <div class="case-body">
-              <p><strong>Context.</strong> Operators drown in metrics; they need “what broke / what next,” not another chart wall.</p>
-              <p><strong>Constraints.</strong> Solo build · Azure-first · ship a live demo people can open without a sales call.</p>
+              <p><strong>Context.</strong> Azure cost and hygiene signals scatter across Advisor, Cost Management, and Resource Graph.</p>
               <p><strong>Architecture.</strong></p>
               <ul>
-                <li>React UI for status, reports, and insight cards.</li>
-                <li>Azure Functions API for aggregation and OpenAI-assisted summaries.</li>
-                <li>Reporting flow aimed at readable ops handoff, not vanity dashboards.</li>
+                <li>Next.js web app with MSAL for Microsoft Entra ID.</li>
+                <li>FastAPI backend: inventory ingest, cost series, findings rules, copilot chat.</li>
+                <li>Demo/mock fixtures so recruiters can explore without tenant credentials.</li>
+                <li>Deploy artifacts: Kubernetes/Helm for the app itself; Render for the API demo path.</li>
               </ul>
-              <p><strong>Tradeoff.</strong> Serverless Functions over always-on App Service — pay for bursts, accept cold starts on rare paths.</p>
-              <p><strong>Demo path.</strong> Open the live app → scan the fleet overview → open an insight / report and note how status is ranked.</p>
+              <p><strong>Tradeoff.</strong> First-class DEMO_MODE over requiring a live subscription to understand the product.</p>
+              <p><strong>Demo path.</strong> Open live app → explore summary/findings → or open the Architecture Lab on this site.</p>
               <p class="case-links">
                 <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer">Live ↗</a>
                 <a href="https://github.com/ryana79/cloudpulse-azure-optimizer" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+                <a href="/lab/cloudpulse/">Architecture Lab ↗</a>
               </p>
             </div>
           </details>
-
           <div class="feat-cta-row">
-            <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <a href="/lab/cloudpulse/" class="btn btn-primary">
               <span class="btn-glyph">▶</span>
+              <span>Open Architecture Lab</span>
+            </a>
+            <a href="https://www.cloudpulse-ai.com/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
               <span>Open live app</span>
+              <span class="btn-glyph">↗</span>
             </a>
             <a href="https://github.com/ryana79/cloudpulse-azure-optimizer" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
               <span>View source</span>
@@ -607,8 +652,8 @@
       </div>
     </article>
 
-    <!-- Case: Platform Control Room -->
-    <article class="case-strip">
+    <!-- Case: Platform Control Room (compact) -->
+    <article class="case-strip case-strip-compact">
       <div class="case-strip-grid">
         <div class="case-strip-media">
           <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">
@@ -625,34 +670,10 @@
             Internal developer platform for Azure onboarding, policy gates, GitOps,
             drift, and cost — one room for platform ops.
           </p>
-          <ul class="feat-outcomes">
-            <li><span class="fo-key">context</span><span class="fo-val">Platform / DevOps proof: shared path before workloads hit Azure.</span></li>
-            <li><span class="fo-key">built</span><span class="fo-val">Onboarding, policy checks, drift detection, cost governance UI.</span></li>
-            <li><span class="fo-key">tradeoff</span><span class="fo-val">Opinionated happy path over a generic “everything dashboard.”</span></li>
-          </ul>
-          <details class="case-block">
-            <summary>Case notes</summary>
-            <div class="case-body">
-              <p><strong>Context.</strong> Platform work scatters across tickets, pipelines, and spreadsheets.</p>
-              <p><strong>Constraints.</strong> Azure-ready delivery · show policy + GitOps + cost in one operator surface.</p>
-              <p><strong>Architecture.</strong></p>
-              <ul>
-                <li>Workload onboarding with policy gates before promote.</li>
-                <li>GitOps / drift signals in the same view as readiness.</li>
-                <li>Cost governance surfaced next to delivery state.</li>
-              </ul>
-              <p><strong>Tradeoff.</strong> Narrow, opinionated control room instead of a sprawling CMDB clone.</p>
-              <p><strong>Demo path.</strong> Open live → walk onboarding / policy → check drift and cost panels.</p>
-              <p class="case-links">
-                <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer">Live ↗</a>
-                <a href="https://github.com/ryana79/platform-control-room" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-              </p>
-            </div>
-          </details>
           <div class="feat-cta-row">
             <a href="https://platformcontrolroom.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-              <span class="btn-glyph">▶</span>
               <span>Open live app</span>
+              <span class="btn-glyph">↗</span>
             </a>
             <a href="https://github.com/ryana79/platform-control-room" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
               <span>View source</span>
@@ -663,62 +684,7 @@
       </div>
     </article>
 
-    <!-- Case: CardWise (compact) -->
-    <article class="case-strip case-strip-compact">
-      <div class="case-strip-grid">
-        <div class="case-strip-media">
-          <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer">
-            <picture>
-              <source srcset="images/cardwise.webp" type="image/webp" />
-              <img src="images/cardwise.png" alt="CardWise rewards optimizer" width="1600" height="870" loading="lazy" />
-            </picture>
-          </a>
-        </div>
-        <div class="case-strip-body">
-          <span class="feat-tag">CASE · PRODUCT · 2026</span>
-          <h3>CardWise · Rewards Optimizer</h3>
-          <p class="feat-desc">
-            Rank your wallet by real dollars back for any purchase — Next.js on Vercel,
-            free demo wallet, no sign-up to try.
-          </p>
-          <ul class="feat-outcomes">
-            <li><span class="fo-key">context</span><span class="fo-val">Product taste proof: clear UX for a messy rewards decision.</span></li>
-            <li><span class="fo-key">built</span><span class="fo-val">Category → amount → ranked cards with valuation-aware dollars back.</span></li>
-            <li><span class="fo-key">tradeoff</span><span class="fo-val">Demo wallet first so value is obvious before account friction.</span></li>
-          </ul>
-          <details class="case-block">
-            <summary>Case notes</summary>
-            <div class="case-body">
-              <p><strong>Context.</strong> People leave money on the table when the “right card” is non-obvious.</p>
-              <p><strong>Constraints.</strong> Fast Next.js ship · works without sign-up · honest about valuation assumptions.</p>
-              <p><strong>Architecture.</strong></p>
-              <ul>
-                <li>Optimize flow: category / merchant + amount → ranked wallet.</li>
-                <li>Valuation settings so “points” become comparable dollars.</li>
-                <li>Deployed on Vercel for quick iteration.</li>
-              </ul>
-              <p><strong>Tradeoff.</strong> Lead with a demo wallet instead of forcing auth — prove the product in one screen.</p>
-              <p><strong>Demo path.</strong> Open Optimize → pick Dining → set $100 → read Top Pick vs other cards.</p>
-              <p class="case-links">
-                <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer">Live ↗</a>
-                <span class="case-private">source · private</span>
-              </p>
-            </div>
-          </details>
-          <div class="feat-cta-row">
-            <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-              <span class="btn-glyph">▶</span>
-              <span>Open live app</span>
-            </a>
-            <span class="btn btn-ghost btn-disabled" title="Repository is private" aria-disabled="true">
-              <span>source · private</span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- Project grid (unique only — PCR & CardWise live in case strips) -->
+    <!-- Supporting grid -->
     <div class="folio-grid">
       <article class="folio-card portfolio-item" data-category="cloud">
         <a href="https://www.postmortemincidentmanager.space/" target="_blank" rel="noopener noreferrer">
@@ -730,7 +696,7 @@
           </div>
           <div class="folio-meta">
             <div class="folio-row">
-              <span class="folio-num">PROJ/02</span>
+              <span class="folio-num">PROJ/03</span>
               <span class="folio-year">2026</span>
               <span class="folio-light"></span>
             </div>
@@ -754,7 +720,7 @@
           </div>
           <div class="folio-meta">
             <div class="folio-row">
-              <span class="folio-num">PROJ/03</span>
+              <span class="folio-num">PROJ/04</span>
               <span class="folio-year">2025</span>
               <span class="folio-light"></span>
             </div>
@@ -778,7 +744,7 @@
           </div>
           <div class="folio-meta">
             <div class="folio-row">
-              <span class="folio-num">PROJ/04</span>
+              <span class="folio-num">PROJ/05</span>
               <span class="folio-year">2024</span>
               <span class="folio-light"></span>
             </div>
@@ -794,7 +760,7 @@
     </div>
 
     <div class="folio-foot">
-      <span class="folio-foot-meta">more on github · public repos + private product work</span>
+      <span class="folio-foot-meta">flagships: CardWise · CloudPulse · more on github</span>
       <a href="https://github.com/ryana79" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
         <span>github.com/ryana79</span>
         <span class="btn-glyph">↗</span>
@@ -971,6 +937,7 @@
   </div>
   <div class="agent-suggest">
     <button class="agent-chip">What's his strongest stack?</button>
+    <button class="agent-chip">Tell me about CardWise</button>
     <button class="agent-chip">Tell me about CloudPulse</button>
     <button class="agent-chip">Is he open to Cloud roles?</button>
   </div>

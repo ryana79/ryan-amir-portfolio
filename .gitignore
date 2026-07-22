@@ -27,6 +27,11 @@ pids
 *.seed
 *.pid.lock
 
+# Node (lab-app only)
+lab-app/node_modules/
+lab-app/dist/
+node_modules/
+
 # Optional npm cache directory
 .npm
 

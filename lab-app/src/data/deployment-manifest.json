@@ -1,0 +1,9 @@
+{
+  "commit": "manual-stub",
+  "validationStatus": "hand-curated",
+  "resourceCount": 13,
+  "testsPassed": null,
+  "deployedAt": "2026-07-15T00:00:00Z",
+  "dataClassification": "sanitized-demo",
+  "notes": "Stub until CI publishes a signed fixture. Lab JSON is demo-only."
+}

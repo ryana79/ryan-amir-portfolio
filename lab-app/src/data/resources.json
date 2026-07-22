@@ -1,0 +1,196 @@
+{
+  "dataClassification": "mixed-labeled",
+  "host": [
+    {
+      "id": "cp-web",
+      "type": "Next.js",
+      "category": "frontend",
+      "environment": "production",
+      "region": "k8s-cluster",
+      "label": "CloudPulse Web",
+      "tags": {
+        "owner": "cloudpulse",
+        "env": "prod",
+        "component": "web"
+      },
+      "iacRef": "k8s/web-deployment.yaml",
+      "layer": "host"
+    },
+    {
+      "id": "cp-api",
+      "type": "FastAPI",
+      "category": "backend",
+      "environment": "production",
+      "region": "k8s-cluster",
+      "label": "CloudPulse API",
+      "tags": {
+        "owner": "cloudpulse",
+        "env": "prod",
+        "component": "api"
+      },
+      "iacRef": "k8s/api-deployment.yaml",
+      "layer": "host"
+    },
+    {
+      "id": "cp-db",
+      "type": "SQLAlchemy/DB",
+      "category": "data",
+      "environment": "production",
+      "region": "managed",
+      "label": "App Database",
+      "tags": {
+        "owner": "cloudpulse",
+        "env": "prod",
+        "component": "db"
+      },
+      "iacRef": "apps/api",
+      "layer": "host"
+    },
+    {
+      "id": "cp-entra",
+      "type": "Microsoft Entra ID",
+      "category": "identity",
+      "environment": "shared",
+      "region": "global",
+      "label": "Entra ID (MSAL/OBO)",
+      "tags": {
+        "owner": "cloudpulse",
+        "env": "shared",
+        "component": "auth"
+      },
+      "layer": "host"
+    },
+    {
+      "id": "cp-openrouter",
+      "type": "OpenRouter/Grok",
+      "category": "ai",
+      "environment": "shared",
+      "region": "external",
+      "label": "Copilot LLM",
+      "tags": {
+        "owner": "cloudpulse",
+        "env": "shared",
+        "component": "copilot"
+      },
+      "layer": "host"
+    },
+    {
+      "id": "cp-ingress",
+      "type": "Ingress",
+      "category": "network",
+      "environment": "production",
+      "region": "k8s-cluster",
+      "label": "Ingress",
+      "tags": {
+        "owner": "cloudpulse",
+        "env": "prod",
+        "component": "ingress"
+      },
+      "iacRef": "k8s/ingress.yaml",
+      "layer": "host"
+    },
+    {
+      "id": "cp-render-api",
+      "type": "Render",
+      "category": "hosting",
+      "environment": "demo",
+      "region": "render",
+      "label": "Render API (demo path)",
+      "tags": {
+        "owner": "cloudpulse",
+        "env": "demo",
+        "component": "api"
+      },
+      "iacRef": "render.yaml",
+      "layer": "host"
+    }
+  ],
+  "inventory": [
+    {
+      "id": "vm-analytics-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "category": "compute",
+      "environment": "nonprod",
+      "region": "eastus",
+      "label": "vm-analytics-01",
+      "tags": {
+        "owner": "platform-demo",
+        "env": "nonprod"
+      },
+      "metricsRef": "metrics/vm-analytics-01",
+      "iacRef": null,
+      "layer": "sample-inventory"
+    },
+    {
+      "id": "vm-batch-02",
+      "type": "Microsoft.Compute/virtualMachines",
+      "category": "compute",
+      "environment": "nonprod",
+      "region": "eastus",
+      "label": "vm-batch-02",
+      "tags": {
+        "owner": "data-demo",
+        "env": "nonprod",
+        "costcenter": "demo-42"
+      },
+      "metricsRef": "metrics/vm-batch-02",
+      "layer": "sample-inventory"
+    },
+    {
+      "id": "disk-orphan-01",
+      "type": "Microsoft.Compute/disks",
+      "category": "storage",
+      "environment": "nonprod",
+      "region": "eastus",
+      "label": "disk-orphan-01",
+      "tags": {
+        "owner": "platform-demo",
+        "env": "nonprod",
+        "costcenter": "demo-42"
+      },
+      "layer": "sample-inventory"
+    },
+    {
+      "id": "pip-orphan-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "category": "network",
+      "environment": "nonprod",
+      "region": "eastus",
+      "label": "pip-orphan-01",
+      "tags": {
+        "env": "nonprod",
+        "costcenter": "demo-42"
+      },
+      "layer": "sample-inventory"
+    },
+    {
+      "id": "vm-web-03",
+      "type": "Microsoft.Compute/virtualMachines",
+      "category": "compute",
+      "environment": "prod",
+      "region": "eastus2",
+      "label": "vm-web-03",
+      "tags": {
+        "owner": "app-demo",
+        "env": "prod",
+        "costcenter": "demo-7"
+      },
+      "metricsRef": "metrics/vm-web-03",
+      "layer": "sample-inventory"
+    },
+    {
+      "id": "nic-web-03",
+      "type": "Microsoft.Network/networkInterfaces",
+      "category": "network",
+      "environment": "prod",
+      "region": "eastus2",
+      "label": "nic-web-03",
+      "tags": {
+        "owner": "app-demo",
+        "env": "prod",
+        "costcenter": "demo-7"
+      },
+      "layer": "sample-inventory"
+    }
+  ]
+}

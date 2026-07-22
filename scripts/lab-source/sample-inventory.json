@@ -1,0 +1,69 @@
+{
+  "layer": "sample-inventory",
+  "dataClassification": "sanitized-demo",
+  "description": "Illustrative Azure resources representing what CloudPulse analyzes. Not an employer subscription. Finding types align with engine/rules.py.",
+  "nodes": [
+    {
+      "id": "vm-analytics-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "category": "compute",
+      "environment": "nonprod",
+      "region": "eastus",
+      "label": "vm-analytics-01",
+      "tags": { "owner": "platform-demo", "env": "nonprod" },
+      "metricsRef": "metrics/vm-analytics-01",
+      "iacRef": null
+    },
+    {
+      "id": "vm-batch-02",
+      "type": "Microsoft.Compute/virtualMachines",
+      "category": "compute",
+      "environment": "nonprod",
+      "region": "eastus",
+      "label": "vm-batch-02",
+      "tags": { "owner": "data-demo", "env": "nonprod", "costcenter": "demo-42" },
+      "metricsRef": "metrics/vm-batch-02"
+    },
+    {
+      "id": "disk-orphan-01",
+      "type": "Microsoft.Compute/disks",
+      "category": "storage",
+      "environment": "nonprod",
+      "region": "eastus",
+      "label": "disk-orphan-01",
+      "tags": { "owner": "platform-demo", "env": "nonprod", "costcenter": "demo-42" }
+    },
+    {
+      "id": "pip-orphan-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "category": "network",
+      "environment": "nonprod",
+      "region": "eastus",
+      "label": "pip-orphan-01",
+      "tags": { "env": "nonprod", "costcenter": "demo-42" }
+    },
+    {
+      "id": "vm-web-03",
+      "type": "Microsoft.Compute/virtualMachines",
+      "category": "compute",
+      "environment": "prod",
+      "region": "eastus2",
+      "label": "vm-web-03",
+      "tags": { "owner": "app-demo", "env": "prod", "costcenter": "demo-7" },
+      "metricsRef": "metrics/vm-web-03"
+    },
+    {
+      "id": "nic-web-03",
+      "type": "Microsoft.Network/networkInterfaces",
+      "category": "network",
+      "environment": "prod",
+      "region": "eastus2",
+      "label": "nic-web-03",
+      "tags": { "owner": "app-demo", "env": "prod", "costcenter": "demo-7" }
+    }
+  ],
+  "edges": [
+    { "id": "ei-web-nic", "source": "vm-web-03", "target": "nic-web-03", "label": "attached", "relationshipType": "attached" },
+    { "id": "ei-analytics-disk", "source": "vm-analytics-01", "target": "disk-orphan-01", "label": "was attached", "relationshipType": "historical" }
+  ]
+}

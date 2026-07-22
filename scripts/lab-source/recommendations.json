@@ -1,0 +1,60 @@
+{
+  "dataClassification": "sanitized-demo",
+  "items": [
+    {
+      "resourceId": "vm-analytics-01",
+      "category": "underutilized_vm",
+      "finding": "Underutilized VM vm-analytics-01",
+      "evidence": "avg CPU 4.2% over 14 days (demo threshold)",
+      "action": "Right-size or deallocate outside business hours",
+      "effect": "Lower compute spend on idle capacity",
+      "confidence": "high",
+      "risk": "medium",
+      "status": "demonstration"
+    },
+    {
+      "resourceId": "vm-analytics-01",
+      "category": "missing_required_tags",
+      "finding": "Missing required tags on vm-analytics-01",
+      "evidence": "missing: costcenter",
+      "action": "Add owner/env/costcenter tags per policy",
+      "effect": "Chargeback and ownership clarity",
+      "confidence": "high",
+      "risk": "low",
+      "status": "demonstration"
+    },
+    {
+      "resourceId": "disk-orphan-01",
+      "category": "unattached_disk",
+      "finding": "Unattached disk disk-orphan-01",
+      "evidence": "managedBy is null",
+      "action": "Snapshot if needed, then delete",
+      "effect": "Stop paying for unused managed disk",
+      "confidence": "high",
+      "risk": "low",
+      "status": "sanitized-sample"
+    },
+    {
+      "resourceId": "pip-orphan-01",
+      "category": "orphaned_public_ip",
+      "finding": "Orphaned public IP pip-orphan-01",
+      "evidence": "no ipConfiguration association",
+      "action": "Release unused public IP",
+      "effect": "Reduce network SKU charges + attack surface",
+      "confidence": "high",
+      "risk": "low",
+      "status": "demonstration"
+    },
+    {
+      "resourceId": "pip-orphan-01",
+      "category": "missing_required_tags",
+      "finding": "Missing required tags on pip-orphan-01",
+      "evidence": "missing: owner",
+      "action": "Tag before delete or reassignment",
+      "effect": "Audit trail for network resources",
+      "confidence": "high",
+      "risk": "low",
+      "status": "demonstration"
+    }
+  ]
+}

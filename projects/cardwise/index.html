@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="CardWise case study — deterministic credit-card ranking over a maintained catalog. Next.js · TypeScript · Vercel. By Ryan Amir." />
+  <meta name="theme-color" content="#06070a" />
+  <link rel="canonical" href="https://ryanamir.online/projects/cardwise/" />
+  <title>CardWise — Case Study · Ryan Amir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300..700;1,300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../portfolio.css" />
+  <link rel="stylesheet" href="case.css" />
+  <link rel="icon" href="../../images/favicon.svg" type="image/svg+xml" />
+</head>
+<body class="case-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="case-topbar">
+    <div class="container case-topbar-inner">
+      <a href="/" class="case-brand">Ryan Amir <span>· Folio</span></a>
+      <nav class="case-nav" aria-label="Case study">
+        <a href="#overview">Overview</a>
+        <a href="#journey">Journey</a>
+        <a href="#methodology">Method</a>
+        <a href="#architecture">Architecture</a>
+        <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="case-nav-cta">Open demo ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <nav class="case-crumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span aria-hidden="true">/</span>
+          <a href="/#folio">Folio</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">CardWise</span>
+        </nav>
+        <p class="case-kicker">CASE STUDY · PRODUCT · 2026</p>
+        <h1 class="case-title">CardWise — <em>swipe the right card.</em></h1>
+        <p class="case-lede">
+          A personalized credit-card recommendation surface that ranks your wallet by
+          estimated dollars back for a purchase — category, fees, caps, and valuation stance.
+          Built as a free demo wallet on Next.js. Educational estimates, not financial advice.
+        </p>
+        <div class="case-hero-meta">
+          <span><strong>Stack</strong> Next.js 16 · React 19 · TypeScript · Tailwind · Vercel</span>
+          <span><strong>Role</strong> Product + engineering</span>
+          <span><strong>Source</strong> Private</span>
+        </div>
+        <div class="case-hero-cta">
+          <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <span class="btn-glyph">▶</span>
+            <span>Open live demo</span>
+          </a>
+          <a href="/#folio" class="btn btn-ghost">Back to folio</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview" class="case-section">
+      <div class="container case-prose">
+        <h2>Overview</h2>
+        <p>
+          People leave money on the table when the “right card” depends on issuer rules,
+          rotating categories, portal-only rates, foreign-transaction fees, and how you value points.
+          CardWise turns that into one screen: pick a category and amount, see a ranked wallet
+          with explainable dollars-back estimates.
+        </p>
+        <ul class="case-bullets">
+          <li><strong>Problem.</strong> Rewards math is messy across issuers and valuation assumptions.</li>
+          <li><strong>Approach.</strong> Deterministic ranking over a maintained card catalog + user inputs — not ML, not “guaranteed savings.”</li>
+          <li><strong>Constraint.</strong> Demo wallet first so value is obvious before account friction.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="journey" class="case-section case-section-alt">
+      <div class="container">
+        <h2>Guided journey</h2>
+        <p class="case-section-sub">Four steps from intent to an explainable pick.</p>
+        <div class="journey" role="tablist" aria-label="CardWise journey steps">
+          <button type="button" class="journey-tab active" role="tab" aria-selected="true" aria-controls="journey-panel" data-step="0">01 · Category</button>
+          <button type="button" class="journey-tab" role="tab" aria-selected="false" aria-controls="journey-panel" data-step="1">02 · Amount</button>
+          <button type="button" class="journey-tab" role="tab" aria-selected="false" aria-controls="journey-panel" data-step="2">03 · Valuation</button>
+          <button type="button" class="journey-tab" role="tab" aria-selected="false" aria-controls="journey-panel" data-step="3">04 · Ranked wallet</button>
+        </div>
+        <div id="journey-panel" class="journey-panel" role="tabpanel">
+          <p class="journey-copy" data-copy="0">Choose a spend category (dining, groceries, travel, …). Matching uses each card’s reward rules, with catch-all / 1× fallbacks.</p>
+          <p class="journey-copy" data-copy="1" hidden>Enter the purchase amount. Caps split elevated-rate spend onto the base rate — the same way issuers actually pay out.</p>
+          <p class="journey-copy" data-copy="2" hidden>Pick a valuation stance (cashback / balanced / aspirational) or override cents-per-point. Points become comparable dollars.</p>
+          <p class="journey-copy" data-copy="3" hidden>Every card in the wallet is scored and sorted by estimated dollars back, with a plain-language reason string on each row.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sample" class="case-section">
+      <div class="container">
+        <h2>Explainable sample recommendation</h2>
+        <p class="case-section-sub">Labeled demo inputs — not live bank data.</p>
+        <div class="sample-grid">
+          <aside class="sample-inputs">
+            <h3>Demo inputs</h3>
+            <dl>
+              <dt>Category</dt><dd>Dining</dd>
+              <dt>Amount</dt><dd>$100.00</dd>
+              <dt>Stance</dt><dd>Balanced</dd>
+              <dt>Travel mode</dt><dd>n/a</dd>
+              <dt>Foreign TX</dt><dd>No</dd>
+            </dl>
+            <p class="sample-note">status: demonstration · catalog snapshot</p>
+          </aside>
+          <div class="sample-result">
+            <h3>Top pick <span class="sample-badge">estimated</span></h3>
+            <p class="sample-card-name">Chase Freedom Unlimited <span>(illustrative)</span></p>
+            <p class="sample-reason">3× dining = about $3.00 back · valuation stance applied</p>
+            <p class="sample-disclaimer">
+              Figures are educational estimates from catalog rules and assumed cents-per-point.
+              Not financial advice. Actual issuer terms and redemptions vary.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="methodology" class="case-section case-section-alt">
+      <div class="container case-prose">
+        <h2>Methodology</h2>
+        <p>
+          Core logic lives in <code>recommend.ts</code>: for each card, resolve the best rule for the
+          category (respecting portal-only / direct travel mode), compute points with remaining
+          elevated-rate caps, convert via cents-per-point, then subtract foreign-transaction fees
+          when applicable. Results sort by estimated dollar value, then lower annual fee as a tie-break.
+        </p>
+        <ol class="case-steps">
+          <li>Apply rotating categories for the current period.</li>
+          <li><code>bestRuleForCategory</code> — elevated rule, else catch-all, else 1×.</li>
+          <li><code>pointsEarned</code> — split spend above remaining cap onto base multiplier.</li>
+          <li>Value = (points × cpp) / 100; optional FX fee deduction (~3%).</li>
+          <li>Surface portal direct-alternative and cap / FX warnings for explainability.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="architecture" class="case-section">
+      <div class="container">
+        <h2>Architecture</h2>
+        <p class="case-section-sub">Real ship path — Next.js App Router on Vercel; Supabase optional.</p>
+        <div class="arch-diagram" role="img" aria-label="Browser to Next.js App Router to recommend engine and card catalog; optional Supabase; deployed on Vercel">
+          <div class="arch-node">Browser</div>
+          <span class="arch-arrow" aria-hidden="true">→</span>
+          <div class="arch-node">Next.js App Router</div>
+          <span class="arch-arrow" aria-hidden="true">→</span>
+          <div class="arch-node accent">recommend.ts</div>
+          <span class="arch-arrow" aria-hidden="true">→</span>
+          <div class="arch-node">Card catalog</div>
+        </div>
+        <ul class="case-bullets">
+          <li>UI + API routes in one Next.js app; TypeScript end-to-end.</li>
+          <li>Catalog and programs as maintained data modules — not scraped bank APIs.</li>
+          <li>Optional Supabase for persistence when signed in; demo works without auth.</li>
+          <li>Vitest covers ranking edge cases (caps, FX, portal-only).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="decisions" class="case-section case-section-alt">
+      <div class="container case-prose">
+        <h2>Decisions</h2>
+        <ul class="case-bullets">
+          <li><strong>Deterministic over ML.</strong> Recruiters and users can audit the reason string; no black-box “savings score.”</li>
+          <li><strong>Demo wallet first.</strong> Prove ranking in one screen before signup.</li>
+          <li><strong>Valuation stance as a first-class input.</strong> Points are not dollars until you say how you redeem.</li>
+          <li><strong>Private source.</strong> Product iteration stays private; public proof is the live demo + this case study.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="limits" class="case-section">
+      <div class="container case-prose">
+        <h2>Limitations</h2>
+        <ul class="case-bullets">
+          <li>No bank linking or issuer APIs — catalog is maintained manually.</li>
+          <li>Estimates depend on assumed cents-per-point and published category rules.</li>
+          <li>Not financial advice; issuer terms and redemptions change.</li>
+          <li>Does not model signup bonuses, credit score, or approval odds.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="future" class="case-section case-section-alt">
+      <div class="container case-prose">
+        <h2>Future</h2>
+        <ul class="case-bullets">
+          <li>Richer wallet sync and spend logging against caps.</li>
+          <li>Merchant-level category hints where unambiguous.</li>
+          <li>Broader catalog coverage and clearer “rule freshness” labeling.</li>
+        </ul>
+        <div class="case-hero-cta" style="margin-top: 28px">
+          <a href="https://cardwise-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <span>Try the demo</span>
+            <span class="btn-glyph">↗</span>
+          </a>
+          <a href="/" class="btn btn-ghost">← Home</a>
+          <a href="/lab/cloudpulse/" class="btn btn-ghost">CloudPulse Architecture Lab</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="case-footer">
+    <div class="container">
+      <span>Ryan Amir · CardWise case study · 2026</span>
+      <a href="mailto:ryanmohammadamir@gmail.com">ryanmohammadamir@gmail.com</a>
+    </div>
+  </footer>
+
+  <script src="case.js" defer></script>
+</body>
+</html>

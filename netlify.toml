@@ -1,7 +1,24 @@
 [build]
+  command = "node scripts/generate-lab-data.mjs && cd lab-app && npm ci && npm run build"
+  publish = "."
   functions = "netlify/functions"
 
+[build.environment]
+  NODE_VERSION = "22"
+
 [[redirects]]
-  from   = "/api/agent"
-  to     = "/.netlify/functions/agent"
+  from = "/api/agent"
+  to = "/.netlify/functions/agent"
   status = 200
+
+# SPA fallback for Architecture Lab only (after API rewrite)
+[[redirects]]
+  from = "/lab/cloudpulse/*"
+  to = "/lab/cloudpulse/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/projects/cardwise"
+  to = "/projects/cardwise/"
+  status = 301
