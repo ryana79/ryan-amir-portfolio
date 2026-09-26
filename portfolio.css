@@ -413,6 +413,19 @@ img { max-width: 100%; display: block; }
 .hero-title .line-1 .hero-word:nth-child(2) { animation-delay: 0.18s; }
 .hero-title .line-2 .hero-word { animation-delay: 0.30s; }
 .hero-title .line-3 .hero-word { animation-delay: 0.42s; }
+.hero-title .line-3 { position: relative; }
+.hero-rule {
+  display: block;
+  width: min(220px, 42vw);
+  height: 2px;
+  margin-top: 0.18em;
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent-glow);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: rule-draw 0.7s var(--ease) 1.05s forwards;
+}
+@keyframes rule-draw { to { transform: scaleX(1); } }
 
 .hero-word.italic {
   font-family: var(--serif);
@@ -687,6 +700,13 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   gap: 10px;
   margin-bottom: clamp(40px, 6vw, 72px);
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+.section.in-view .section-head {
+  opacity: 1;
+  transform: none;
 }
 .section-num {
   font-family: var(--mono);
@@ -923,15 +943,44 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border-2);
 }
 .tl-item.current .tl-node {
+  position: relative;
   background: var(--accent);
   border-color: var(--accent);
   box-shadow: 0 0 0 4px var(--accent-soft), 0 0 14px var(--accent-glow);
 }
+.tl-item.current .tl-node::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0;
+  animation: node-ring 2.6s ease-out infinite;
+}
+@keyframes node-ring {
+  0% { transform: scale(0.55); opacity: 0.65; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
 .tl-line {
   flex: 1;
   width: 1px;
-  background: var(--border);
+  background: var(--border-2);
   margin-top: 8px;
+  transform-origin: top center;
+}
+#tab-experience.tl-draw .tl-line { transform: scaleY(0); }
+#tab-experience.tl-drawn .tl-line {
+  transform: scaleY(1);
+  transition: transform 0.9s var(--ease);
+}
+#tab-experience.tl-drawn .tl-item:nth-child(2) .tl-line { transition-delay: 0.16s; }
+#tab-experience.tl-drawn .tl-item:nth-child(3) .tl-line { transition-delay: 0.32s; }
+.tl-place {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text-mute);
 }
 .tl-item:last-child .tl-line { display: none; }
 
@@ -1280,6 +1329,7 @@ img { max-width: 100%; display: block; }
 
 /* Featured */
 .feature-project {
+  position: relative;
   margin-bottom: clamp(40px, 5vw, 60px);
   border: 1px solid var(--border-2);
   background: linear-gradient(180deg, oklch(0.10 0.02 250 / 0.55), oklch(0.08 0.01 250 / 0.7));
@@ -1556,15 +1606,25 @@ img { max-width: 100%; display: block; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin: 0 0 18px;
-  padding: 8px 12px;
-  border: 1px solid var(--border-2);
+  margin: 0 0 22px;
+  padding: 8px 14px 8px 12px;
+  border: 1px solid var(--accent-line, var(--border-2));
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--accent-soft);
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--text-2);
+  flex-wrap: wrap;
+  max-width: 100%;
+  opacity: 0;
+  animation: word-rise 0.9s var(--ease) 0.72s forwards;
+}
+.hero-availability .now-k {
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  font-size: 10px;
 }
 .profile-stats {
   margin: 22px 0 8px;
@@ -2363,6 +2423,28 @@ html.agent-open .agent-launcher {
 /* ============================================
    3D TILT
    ============================================ */
+.module::after,
+.folio-card::after,
+.feature-project::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 0.45s var(--ease);
+  pointer-events: none;
+  z-index: 2;
+}
+.module:hover::after,
+.folio-card:hover::after,
+.feature-project:hover::after {
+  transform: scaleY(1);
+}
 .folio-card, .module, .feature-project {
   transform-style: preserve-3d;
   transition: transform 0.4s var(--ease);

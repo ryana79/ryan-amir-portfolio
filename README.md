@@ -1,6 +1,6 @@
 # Ryan Amir — Portfolio (Folio №07 / 2026)
 
-Personal site for Ryan Amir, Cloud Engineer. Live at [ryanamir.online](https://ryanamir.online/).
+Personal site for Ryan Amir, DevOps Engineer at Davidson Kempner. Live at [ryanamir.online](https://ryanamir.online/).
 
 ## Stack
 
@@ -54,6 +54,7 @@ See [docs/lab-data.md](docs/lab-data.md) for demo vs real data boundaries.
 
 ## Experience (summary)
 
-- Cloud Engineer @ Astro Intelligence INC (Jul 2023 — present)
+- DevOps Engineer @ Davidson Kempner Capital Management, New York (Sep 2026 — present)
+- Cloud Engineer @ Astro Intelligence Labs (Jul 2023 — Sep 2026)
 - Cloud Solutions Engineer @ Chief Technology Group (Jun 2021 — Jun 2023)
-- Rutgers University, BS Computer Science (2023–2027)
+- Rutgers University, BS Computer Science, class of 2027

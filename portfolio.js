@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollProgress();
   initRailNav();
   initSectionInView();
+  initTimelineDraw();
   initScramble();
   initTilt();
   initMagnetic();
@@ -231,7 +232,7 @@ function initTerminal() {
     ['ok',   "fingerprint verified · session opened"],
     ['info', "loading modules: cloud · platform · product"],
     ['ok',   "✓ azure · terraform · github actions"],
-    ['ok',   "ready · open to Cloud / Platform / DevOps roles"],
+    ['ok',   "role · devops engineer @ davidson kempner · new york"],
     ['warn', "tip: press / for the agent · or scroll to folio"],
   ];
 
@@ -374,7 +375,7 @@ function initTilt() {
       cancelAnimationFrame(r);
       r = requestAnimationFrame(() => {
         card.classList.add('tilting');
-        card.style.transform = `perspective(900px) rotateX(${(-dy * 3).toFixed(2)}deg) rotateY(${(dx * 3).toFixed(2)}deg) translateZ(0)`;
+        card.style.transform = `perspective(900px) rotateX(${(-dy * 3).toFixed(2)}deg) rotateY(${(dx * 3).toFixed(2)}deg) translateY(-4px)`;
       });
     });
     card.addEventListener('mouseleave', () => {
@@ -496,6 +497,28 @@ function initSectionInView() {
   });
 }
 
+/* Draw the experience connector once the panel is actually on screen. */
+function initTimelineDraw() {
+  const panel = document.getElementById('tab-experience');
+  if (!panel) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const arm = () => {
+    if (panel.hasAttribute('hidden') || panel.classList.contains('tl-drawn')) return;
+    const rect = panel.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight * 0.9 && rect.bottom > 64;
+    if (!inView) return;
+    panel.classList.add('tl-draw');
+    requestAnimationFrame(() => requestAnimationFrame(() => panel.classList.add('tl-drawn')));
+  };
+
+  window.__armTimeline = arm;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) arm(); });
+  }, { threshold: 0.2 });
+  obs.observe(panel);
+}
+
 /* ============================================
    TABS (WAI-ARIA)
    ============================================ */
@@ -519,6 +542,9 @@ function initTabs() {
       else p.setAttribute('hidden', '');
     });
     if (focusTab) tab.focus();
+    if (tab.id === 'tabbtn-experience' && typeof window.__armTimeline === 'function') {
+      window.__armTimeline();
+    }
   }
 
   // ensure initial state
@@ -669,13 +695,15 @@ function initAgent() {
 
 FACTS:
 - Ryan Amir, 21, born in Pakistan, based Matawan NJ.
-- Cloud engineer with 3+ years experience. Currently Cloud Engineer @ Astro Intelligence INC (Jul '23 — present). Previously Cloud Solutions Engineer @ Chief Technology Group (Jun '21 — Jun '23).
-- Education: Rutgers University, BS Computer Science, 2023–2027.
+- DevOps engineer with 4+ years experience. Currently DevOps Engineer @ Davidson Kempner Capital Management, New York (Sep 2026 — present). Previously Cloud Engineer @ Astro Intelligence Labs (Jul 2023 — Sep 2026). Before that, Cloud Solutions Engineer @ Chief Technology Group (Jun 2021 — Jun 2023).
+- Davidson Kempner has no published duty list yet. Do not invent responsibilities for that role. Title, firm, city, and dates only.
+- Education: Rutgers University, BS Computer Science, class of 2027 (Sep 2023 — Jan 2027). Based in Matawan, NJ; works in New York.
+- Not actively recruiting. Employed. Still reachable at ryanmohammadamir@gmail.com.
 - Strongest stack: Azure (admin associate cert), Terraform, Bicep, GitHub Actions, Python, PowerShell, Bash, Cosmos DB, Service Bus.
-- Notable achievements: cut idle compute costs 25% via runbooks; administered Azure Virtual Desktop for 100+ users via Nerdio; sub-200ms API p95; resolved 85% of tickets on first contact at prior role.
+- Notable achievements at Astro Intelligence Labs: cut idle compute costs 25% via runbooks; administered Azure Virtual Desktop for 100+ users via Nerdio. At Chief Technology Group: resolved 85% of tickets on first contact. Project metric, not an employer claim: sub-200ms API p95.
 - Featured projects: CardWise (product flagship — Next.js/TypeScript on Vercel; deterministic card ranking over a maintained catalog + demo wallet; case study at /projects/cardwise/; demo cardwise-alpha.vercel.app; source private), CloudPulse (Azure optimization console — Next.js + FastAPI + Entra ID + OpenRouter/Grok; findings/cost/copilot; k8s/Helm host map; Architecture Lab at /lab/cloudpulse/; github.com/ryana79/cloudpulse-azure-optimizer; live cloudpulse-ai.com), Platform Control Room (Azure IDP / GitOps; platformcontrolroom.com), Incident Postmortem Manager, Azure Serverless User Manager (sub-200ms p95), Glight Cutz (Flask, 500+ clients).
 - Certs: Azure Administrator Associate (Jan 2026), Azure Fundamentals, AWS Cloud Practitioner, AT&T Tech Academy.
-- Open to Cloud, Platform, and DevOps roles. Based in Matawan NJ; remote-friendly. Best contact: ryanmohammadamir@gmail.com.
+- Best contact: ryanmohammadamir@gmail.com.
 
 If asked anything you don't know, say so briefly and suggest emailing Ryan.`;
 
