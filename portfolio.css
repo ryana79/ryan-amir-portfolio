@@ -782,6 +782,9 @@ img { max-width: 100%; display: block; }
 }
 .portrait-frame img {
   width: 100%;
+  height: auto;
+  aspect-ratio: 506 / 900;
+  object-fit: cover;
   filter: grayscale(0.4) contrast(1.05) brightness(0.95);
   transition: filter 0.6s var(--ease);
 }
