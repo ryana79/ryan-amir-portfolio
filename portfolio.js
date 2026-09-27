@@ -766,16 +766,6 @@ If asked anything you don't know, say so briefly and suggest emailing Ryan.`;
     return t;
   }
 
-  function mailtoFallback(question) {
-    const a = document.createElement('a');
-    a.href = 'mailto:ryanmohammadamir@gmail.com?subject=' +
-      encodeURIComponent('Portfolio question') +
-      '&body=' + encodeURIComponent(question || '');
-    a.textContent = 'email Ryan →';
-    a.className = 'agent-mail-link';
-    return a;
-  }
-
   function showTyping() {
     const w = document.createElement('div');
     w.className = 'agent-msg agent-msg-bot agent-typing-wrap';
@@ -785,41 +775,55 @@ If asked anything you don't know, say so briefly and suggest emailing Ryan.`;
     return w;
   }
 
+  function localAnswer(q) {
+    const s = q.toLowerCase();
+    const has = (...words) => words.some(w => s.includes(w));
+
+    if (has('cardwise', 'card wise', 'rewards')) {
+      return 'CardWise is a credit-card rewards optimizer. Next.js and TypeScript on Vercel, ranking a maintained catalog plus a demo wallet. Case study at /projects/cardwise/. The demo is cardwise-alpha.vercel.app. Source is private.';
+    }
+    if (has('cloudpulse', 'cloud pulse')) {
+      return 'CloudPulse is an Azure optimization console: Next.js, FastAPI, Entra ID, and OpenRouter/Grok. It covers findings, cost, and a copilot. The architecture lab is at /lab/cloudpulse/, the app is cloudpulse-ai.com, and the source is github.com/ryana79/cloudpulse-azure-optimizer.';
+    }
+    if (has('stack', 'azure', 'terraform', 'skills', 'tools')) {
+      return 'Strongest stack: Azure (Administrator Associate), Terraform, Bicep, GitHub Actions, Python, PowerShell, Bash, Cosmos DB, and Service Bus.';
+    }
+    if (has('work', 'job', 'role', 'davidson', 'kempner', 'astro', 'employ', 'open')) {
+      return 'Ryan is a DevOps Engineer at Davidson Kempner Capital Management in New York, since September 2026. Before that, Cloud Engineer at Astro Intelligence Labs (Jul 2023–Sep 2026), and Cloud Solutions Engineer at Chief Technology Group (Jun 2021–Jun 2023). No duty list is published for Davidson Kempner. He is employed, not actively recruiting.';
+    }
+    if (has('school', 'rutgers', 'education', 'college', 'study')) {
+      return 'Rutgers University, BS Computer Science, class of 2027 (Sep 2023–Jan 2027). He is based in Matawan, NJ, and works in New York.';
+    }
+    if (has('cert', 'certification')) {
+      return 'Certs: Azure Administrator Associate (Jan 2026), Azure Fundamentals, AWS Cloud Practitioner, and AT&T Technology Academy.';
+    }
+    if (has('contact', 'email', 'reach', 'hire')) {
+      return 'Best contact is ryanmohammadamir@gmail.com. GitHub is github.com/ryana79.';
+    }
+    if (has('project', 'built', 'ship')) {
+      return 'Featured work: CardWise, CloudPulse, Platform Control Room (platformcontrolroom.com), Incident Postmortem Manager, Azure Serverless User Manager, and Glight Cutz.';
+    }
+    return 'That is not in the notes. Email Ryan at ryanmohammadamir@gmail.com and he can answer it directly.';
+  }
+
   async function ask(q) {
     if (!q.trim()) return;
     addMsg('user', q);
     const typing = showTyping();
+    let text = '';
     try {
       const res = await fetch('/api/agent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: q }),
       });
-      typing.remove();
-      if (!res.ok) {
-        const space = document.createTextNode(' ');
-        const frag = document.createDocumentFragment();
-        frag.append(space, mailtoFallback(q));
-        addMsg('agent', '// agent offline — ', frag);
-        return;
+      if (res.ok) {
+        const data = await res.json();
+        text = (data.text || '').trim();
       }
-      const data = await res.json();
-      const t = (data.text || '').trim();
-      if (!t) {
-        const space = document.createTextNode(' ');
-        const frag = document.createDocumentFragment();
-        frag.append(space, mailtoFallback(q));
-        addMsg('agent', '// empty reply — ', frag);
-        return;
-      }
-      addMsg('agent', t);
-    } catch (_) {
-      typing.remove();
-      const space = document.createTextNode(' ');
-      const frag = document.createDocumentFragment();
-      frag.append(space, mailtoFallback(q));
-      addMsg('agent', '// connection error — ', frag);
-    }
+    } catch (_) { /* static host or network: answer from the fact sheet */ }
+    typing.remove();
+    addMsg('agent', text || localAnswer(q));
   }
 
   form.addEventListener('submit', (e) => {

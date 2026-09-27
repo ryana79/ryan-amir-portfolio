@@ -3,7 +3,8 @@
 // Set GROQ_API_KEY in: Netlify dashboard → Site settings → Environment variables
 
 const GROQ_API = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL    = 'llama-3.1-8b-instant'; // free, fast, ~0.3s
+// Free-tier replacement for llama-3.1-8b-instant (shut down 2026-08-16).
+const MODEL    = 'openai/gpt-oss-20b';
 
 const SYSTEM = `You are Ryan Amir's portfolio agent. Answer on Ryan's behalf. Be concise (max 80 words), warm, lower-case-ish technical tone. Use plain text only. Never invent details — only use the facts below.
 
@@ -58,8 +59,10 @@ exports.handler = async (event) => {
         { role: 'system', content: SYSTEM },
         { role: 'user',   content: question.trim() },
       ],
-      max_tokens: 160,
+      max_completion_tokens: 512,
       temperature: 0.6,
+      reasoning_effort: 'low',
+      include_reasoning: false,
     }),
   });
 
@@ -69,7 +72,8 @@ exports.handler = async (event) => {
   }
 
   const data = await res.json();
-  const text = data.choices?.[0]?.message?.content ?? '';
+  const raw = data.choices?.[0]?.message?.content ?? '';
+  const text = raw.replace(/\*\*/g, '').replace(/`/g, '').trim();
 
   return {
     statusCode: 200,
